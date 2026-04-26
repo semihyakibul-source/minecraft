@@ -36,6 +36,29 @@
 
         @keyframes ticker-move { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
+        /* NAV / LOGO ALANI */
+        nav {
+            padding: 20px 5%;
+            display: flex;
+            align-items: center;
+            background: transparent;
+        }
+        .logo-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-box img {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+        }
+        .logo-box span {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
         /* SOL ALT SABİT OYNA BUTONU */
         .fixed-play-container {
             position: fixed; bottom: 25px; left: 25px; z-index: 9999;
@@ -94,9 +117,10 @@
     <div class="ticker-content" id="ticker"></div>
 </div>
 
-<nav style="padding: 15px 8%; display: flex; justify-content: space-between; align-items: center; background: rgba(5, 6, 8, 0.85); border-bottom: 1px solid var(--border);">
-    <div style="display: flex; align-items: center; gap: 12px;">
-        <div style="font-size: 22px; font-weight: 800;">AESIR<span style="color:var(--primary)">MC</span></div>
+<nav>
+    <div class="logo-box">
+        <img src="logo.png" alt="AesirMC Logo" onerror="this.src='https://minecraft.wiki/images/Anvil_JE3_BE2.png'">
+        <span>AESIR<span style="color:var(--primary)">MC</span></span>
     </div>
 </nav>
 
@@ -111,7 +135,7 @@
     <h2 style="margin-bottom: 25px;">Giriş Yap</h2>
     <input type="text" id="username" placeholder="Minecraft Kullanıcı Adı">
     <input type="password" id="password" placeholder="Şifre">
-    <button class="btn-primary" style="width:100%; padding:18px; background:linear-gradient(135deg, var(--primary), var(--secondary)); border:none; border-radius:12px; color:white; font-weight:700; cursor:pointer;" onclick="connectAndGo()">SİSTEME BAĞLAN</button>
+    <button class="btn-primary" style="width:100%; padding:18px; background:linear-gradient(135deg, var(--primary), var(--secondary)); border:none; border-radius:12px; color:white; font-weight:700; cursor:pointer;" onclick="connectAndGo()">GİRİŞ YAP</button>
     
     <div class="social-store-row">
         <a href="https://discord.com/invite/k8qFbQhbHX" target="_blank" class="dc-btn">
@@ -153,7 +177,6 @@
         { name: "1000AP", img: "1000.png" }, { name: "200AP", img: "200.png" }, { name: "2000AP", img: "2000.png" }
     ];
 
-    // Türk İsimli Kayan Yazı
     const turkIsimleri = ["Ahmet", "Mehmet", "Can", "Burak", "Emre", "Yusuf", "Arda", "Eren", "Mert", "Okan", "Boran", "Selim", "Kerem", "Yigit", "Ege", "Kaan", "Enes", "Omer", "Ali", "Batuhan", "Umut", "Serkan", "Murat"];
     const ticker = document.getElementById('ticker');
     for(let i=0; i<100; i++) {
