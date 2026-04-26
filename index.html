@@ -8,87 +8,101 @@
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #eee; }
+        body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #eee; overflow-x: hidden; }
         .red-gradient { background: linear-gradient(135deg, #ff0000 0%, #8b0000 100%); }
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        
-        /* Hediye Kutusu Animasyonu */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
         .animate-float { animation: float 3s ease-in-out infinite; }
+        .gift-glow { box-shadow: 0 0 50px rgba(255, 0, 0, 0.4); }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
 
-    <div id="login-section" class="glass p-8 rounded-2xl w-full max-w-md shadow-2xl">
+    <div id="login-section" class="glass p-8 rounded-2xl w-full max-w-md shadow-2xl transition-all duration-500">
         <div class="text-center mb-8">
             <h1 class="text-3xl font-bold text-red-600 mb-2">The Mind Script</h1>
-            <p class="text-gray-400">Devam etmek için giriş yapın</p>
+            <p class="text-gray-400">Aesir Hediye Dağıtımı</p>
         </div>
         
         <div class="space-y-4">
-            <div>
-                <label class="block text-sm mb-1 text-gray-300">Kullanıcı Adı</label>
-                <input type="text" id="username" class="w-full bg-black border border-gray-800 rounded-lg p-3 focus:border-red-500 outline-none transition">
+            <input type="text" id="username" placeholder="Kullanıcı Adı" class="w-full bg-black border border-gray-800 rounded-lg p-3 focus:border-red-500 outline-none transition text-white">
+            <input type="password" id="password" placeholder="Şifre" class="w-full bg-black border border-gray-800 rounded-lg p-3 focus:border-red-500 outline-none transition text-white">
+            
+            <div class="flex gap-2 pt-2">
+                <button onclick="handleAuth('login')" class="flex-1 bg-gray-800 p-3 rounded-lg font-bold hover:bg-gray-700 transition active:scale-95">Giriş Yap</button>
+                <button onclick="handleAuth('register')" class="flex-1 red-gradient p-3 rounded-lg font-bold hover:opacity-90 transition active:scale-95">Kayıt Ol</button>
             </div>
-            <div>
-                <label class="block text-sm mb-1 text-gray-300">Şifre</label>
-                <input type="password" id="password" class="w-full bg-black border border-gray-800 rounded-lg p-3 focus:border-red-500 outline-none transition">
-            </div>
-            <button onclick="handleLogin()" class="w-full red-gradient p-3 rounded-lg font-bold hover:opacity-90 transition transform active:scale-95">
-                Giriş Yap ve Kayıt Ol
-            </button>
         </div>
+        <p class="text-center text-xs text-gray-600 mt-6 uppercase tracking-widest">Minimalist v1.0</p>
     </div>
 
-    <div id="gift-section" class="hidden text-center space-y-8">
-        <h2 class="text-4xl font-bold">Hoş geldin, <span id="display-user" class="text-red-500"></span>!</h2>
+    <div id="gift-section" class="hidden text-center space-y-8 animate-in fade-in zoom-in duration-700">
+        <h2 class="text-4xl font-bold italic">HOŞ GELDİN, <span id="display-user" class="text-red-500 uppercase"></span>!</h2>
         
-        <div class="relative inline-block animate-float">
-            <div id="gift-box" class="w-48 h-48 red-gradient rounded-3xl flex items-center justify-center text-6xl shadow-[0_0_50px_rgba(255,0,0,0.3)] cursor-pointer hover:scale-105 transition">
+        <div id="box-container" class="relative inline-block animate-float mt-10">
+            <div id="gift-box" class="w-56 h-56 red-gradient rounded-3xl flex items-center justify-center text-7xl gift-glow cursor-pointer hover:scale-110 transition-transform duration-300">
                 🎁
             </div>
         </div>
 
-        <p class="text-gray-400">Gizemli hediye paketini açmak için üzerine tıkla!</p>
+        <p id="instruction" class="text-gray-400 text-lg">Hediye paketini açmak için tıkla!</p>
         
-        <div id="result" class="hidden glass p-6 rounded-xl animate-bounce">
-            <h3 class="text-2xl font-bold text-yellow-400">Tebrikler!</h3>
-            <p id="gift-name" class="text-xl"></p>
+        <div id="result" class="hidden glass p-10 rounded-2xl border-2 border-yellow-500 animate-bounce">
+            <h3 class="text-3xl font-bold text-yellow-500 mb-2">TEBRİKLER!</h3>
+            <p id="gift-name" class="text-2xl font-bold text-white"></p>
+            <button onclick="location.reload()" class="mt-6 text-sm text-gray-500 underline">Tekrar Dene</button>
         </div>
     </div>
 
     <script>
-        // SUPABASE BAĞLANTISI (Buraya kendi bilgilerini ekleyeceğiz)
-        const SUPABASE_URL = "YOUR_SUPABASE_URL";
-        const SUPABASE_KEY = "YOUR_SUPABASE_ANON_KEY";
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        // --- SUPABASE AYARLARI ---
+        const SUPABASE_URL = "BURAYA_URL_GELECEK";
+        const SUPABASE_KEY = "BURAYA_ANON_KEY_GELECEK";
+        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        async function handleLogin() {
-            const user = document.getElementById('username').value;
-            const pass = document.getElementById('password').value;
+        async function handleAuth(type) {
+            const user = document.getElementById('username').value.trim();
+            const pass = document.getElementById('password').value.trim();
 
-            if(!user || !pass) return alert("Boş alan bırakma!");
+            if(!user || !pass) return alert("Lütfen kullanıcı adı ve şifre girin.");
 
-            // Supabase'e kayıt ve giriş mantığı buraya gelecek
-            // Şimdilik simülasyon yapıyoruz:
+            if(type === 'register') {
+                // Kayıt işlemi
+                const { error } = await _supabase.from('profiles').insert([{ username: user, password: pass }]);
+                if(error) {
+                    if(error.message.includes("unique")) return alert("Bu kullanıcı adı zaten alınmış!");
+                    return alert("Hata: " + error.message);
+                }
+                alert("Başarıyla kayıt oldun! Şimdi giriş yapabilirsin.");
+            } else {
+                // Giriş işlemi
+                const { data, error } = await _supabase.from('profiles').select('*').eq('username', user).eq('password', pass).single();
+                if(error || !data) return alert("Kullanıcı adı veya şifre hatalı!");
+                
+                showGiftSection(user);
+            }
+        }
+
+        function showGiftSection(user) {
             document.getElementById('login-section').classList.add('hidden');
             document.getElementById('gift-section').classList.remove('hidden');
             document.getElementById('display-user').innerText = user;
         }
 
         document.getElementById('gift-box').onclick = function() {
-            const hediyeler = ["Premium Üyelik", "100 Altın", "Efsanevi Görünüm", "Gümüş Paket"];
-            const sansliHediye = hediyeler[Math.floor(Math.random() * hediyeler.length)];
+            const hediyeler = ["🔥 VIP Üyelik", "💎 1000 Kredi", "🗡️ Efsanevi Kılıç", "📦 Gizemli Kutu", "🎫 Etkinlik Bileti"];
+            const kazanan = hediyeler[Math.floor(Math.random() * hediyeler.length)];
             
-            this.style.display = 'none';
-            document.getElementById('result').classList.remove('hidden');
-            document.getElementById('gift-name').innerText = sansliHediye + " Kazandın!";
+            // Animasyonlar
+            this.style.transform = "scale(0) rotate(360deg)";
+            this.style.opacity = "0";
             
-            // Burada kazananı Supabase'e kaydedeceğiz
+            setTimeout(() => {
+                document.getElementById('box-container').classList.add('hidden');
+                document.getElementById('instruction').classList.add('hidden');
+                document.getElementById('result').classList.remove('hidden');
+                document.getElementById('gift-name').innerText = kazanan;
+            }, 300);
         };
     </script>
 </body>
