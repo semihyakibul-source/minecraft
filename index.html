@@ -14,6 +14,7 @@
             --primary: #00a2ff; --secondary: #0066ff; --accent: #d48e00;
             --bg-dark: #050608; --glass: rgba(255, 255, 255, 0.03);
             --border: rgba(255, 255, 255, 0.1); --success: #00ff88;
+            --discord-blue: #5865F2; /* Discord Resmi Rengi */
         }
 
         body {
@@ -36,20 +37,33 @@
 
         @keyframes ticker-move { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        /* GİRİŞ PANELİ VE YENİ BUTONLAR */
+        /* GİRİŞ PANELİ */
         #auth-container { margin: auto; width: 100%; max-width: 420px; padding: 40px; background: var(--glass); border: 1px solid var(--border); border-radius: 32px; text-align: center; }
         input { width: 100%; padding: 16px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 12px; color: white; margin-bottom: 15px; box-sizing: border-box; outline: none; }
         
+        /* SOSYAL VE MAĞAZA SATIRI */
         .social-store-row {
             display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 25px;
         }
 
         .dc-btn {
-            width: 45px; height: 45px; border-radius: 50%; cursor: pointer; transition: 0.3s;
+            width: 48px; height: 48px; 
+            background-color: var(--discord-blue); /* İstenen mavi arka plan */
+            border-radius: 50%; 
+            cursor: pointer; 
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
+            border: none;
+            text-decoration: none;
         }
-        .dc-btn img { width: 100%; height: 100%; border-radius: 50%; }
-        .dc-btn:hover { transform: scale(1.1); filter: brightness(1.2); }
+        
+        .dc-btn img { 
+            width: 26px; /* İkonun içeride düzgün durması için */
+            height: auto;
+        }
+
+        .dc-btn:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 6px 20px rgba(88, 101, 242, 0.6); }
 
         .store-btn {
             background: #000; color: white; padding: 12px 30px; border-radius: 50px;
@@ -95,7 +109,7 @@
     
     <div class="social-store-row">
         <a href="https://discord.com/invite/k8qFbQhbHX" target="_blank" class="dc-btn">
-            <img src="dc.png" alt="Discord" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3670/3670157.png'">
+            <img src="dc.png" alt="Discord" onerror="this.src='https://assets-global.website-files.com/6257adef93867e3734e6d48b/636e0a6a49cf127bf92de1e2_icon_clyde_blurple_RGB.png'">
         </a>
         <a href="https://store.aesirmc.com/aesir-points" target="_blank" class="store-btn">
             Mağazaya git
@@ -126,7 +140,6 @@
 </div>
 
 <script>
-    // Supabase Ayarları
     const S_URL = "https://iigemvvlznvgneghevev.supabase.co"; 
     const S_KEY = "sb_publishable_sus0jwzJ9oMsoTO-_Xq3Yg_OTXHZIpm"; 
     const _db = supabase.createClient(S_URL, S_KEY);
