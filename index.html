@@ -19,15 +19,21 @@
 
         body {
             margin: 0; font-family: 'Plus Jakarta Sans', sans-serif;
-            background: var(--bg-dark); color: white; min-height: 100vh;
+            background-color: var(--bg-dark);
+            /* ARKA PLAN BURADA DEĞİŞTİ */
+            background-image: url('background2.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white; min-height: 100vh;
             display: flex; flex-direction: column;
-            background-image: radial-gradient(circle at 10% 20%, rgba(0, 162, 255, 0.1) 0%, transparent 40%);
             overflow-x: hidden;
         }
 
         /* ÜST KAZANANLAR ŞERİDİ */
         .winners-ticker {
-            background: rgba(0, 162, 255, 0.08); border-bottom: 1px solid var(--border);
+            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
             height: 45px; display: flex; align-items: center; overflow: hidden; white-space: nowrap;
         }
         .ticker-content { display: inline-flex; animation: ticker-move 100s linear infinite; gap: 60px; padding-left: 100%; }
@@ -36,33 +42,14 @@
 
         @keyframes ticker-move { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        /* NAV / LOGO ALANI */
-        nav {
-            padding: 20px 5%;
-            display: flex;
-            align-items: center;
-            background: transparent;
-        }
-        .logo-box {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .logo-box img {
-            width: 42px;
-            height: 42px;
-            object-fit: contain;
-        }
-        .logo-box span {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
+        /* SOL ÜST NAV ALANI */
+        nav { padding: 20px 5%; display: flex; align-items: center; background: transparent; }
+        .nav-logo-box { display: flex; align-items: center; gap: 12px; }
+        .nav-logo-box img { width: 42px; height: 42px; object-fit: contain; }
+        .nav-logo-box span { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
 
-        /* SOL ALT SABİT OYNA BUTONU */
-        .fixed-play-container {
-            position: fixed; bottom: 25px; left: 25px; z-index: 9999;
-        }
+        /* SOL ALT SABİT BUTON */
+        .fixed-play-container { position: fixed; bottom: 25px; left: 25px; z-index: 9999; }
         .btn-play {
             background-color: var(--accent); color: black; padding: 12px 25px;
             border-radius: 50px; text-decoration: none; font-weight: 800;
@@ -73,11 +60,13 @@
         .custom-cursor-img { width: 22px; height: 22px; object-fit: contain; }
 
         /* GİRİŞ PANELİ */
-        #auth-container { margin: auto; width: 100%; max-width: 420px; padding: 40px; background: var(--glass); border: 1px solid var(--border); border-radius: 32px; text-align: center; backdrop-filter: blur(20px); }
-        input { width: 100%; padding: 16px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 12px; color: white; margin-bottom: 15px; box-sizing: border-box; outline: none; }
+        #auth-container { margin: auto; width: 100%; max-width: 420px; padding: 40px; background: rgba(0, 0, 0, 0.6); border: 1px solid var(--border); border-radius: 32px; text-align: center; backdrop-filter: blur(25px); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .auth-logo { width: 80px; height: 80px; object-fit: contain; margin-bottom: 15px; filter: drop-shadow(0 0 15px var(--primary)); }
+        
+        input { width: 100%; padding: 16px; background: rgba(255,255,255,0.08); border: 1px solid var(--border); border-radius: 12px; color: white; margin-bottom: 15px; box-sizing: border-box; outline: none; }
+        input:focus { border-color: var(--primary); background: rgba(255,255,255,0.12); }
         
         .social-store-row { display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 25px; }
-        
         .dc-btn {
             width: 48px; height: 48px; background-color: var(--discord-blue);
             border-radius: 50%; cursor: pointer; transition: 0.3s;
@@ -94,14 +83,14 @@
         }
         .store-btn:hover { background: #111; transform: translateY(-2px); }
 
-        /* OYUN ALANI */
+        /* OYUN EKRANI */
         #game-container { display: none; padding: 60px; text-align: center; }
         .main-chest { width: 220px; cursor: pointer; filter: drop-shadow(0 0 30px rgba(0, 162, 255, 0.3)); transition: 0.3s; }
         .chest-jump { animation: squash-stretch 0.5s ease-in-out; }
         @keyframes squash-stretch { 0%, 100% { transform: scale(1); } 30% { transform: scale(1.2, 0.8); } 50% { transform: scale(0.8, 1.2) translateY(-25px); } }
 
         #roulette-section { display: none; margin-top: 40px; }
-        .viewport { width: 100%; max-width: 800px; height: 150px; margin: 0 auto; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 20px; position: relative; overflow: hidden; }
+        .viewport { width: 100%; max-width: 800px; height: 150px; margin: 0 auto; background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 20px; position: relative; overflow: hidden; }
         .viewport::after { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 3px; background: var(--primary); z-index: 10; box-shadow: 0 0 15px var(--primary); }
         #strip { display: flex; position: absolute; left: 0; top: 0; height: 100%; align-items: center; }
         .slot { min-width: 130px; display: flex; flex-direction: column; align-items: center; }
@@ -118,7 +107,7 @@
 </div>
 
 <nav>
-    <div class="logo-box">
+    <div class="nav-logo-box">
         <img src="logo.png" alt="AesirMC Logo" onerror="this.src='https://minecraft.wiki/images/Anvil_JE3_BE2.png'">
         <span>AESIR<span style="color:var(--primary)">MC</span></span>
     </div>
@@ -132,7 +121,8 @@
 </div>
 
 <div id="auth-container">
-    <h2 style="margin-bottom: 25px;">Giriş Yap</h2>
+    <img src="logo.png" class="auth-logo" alt="Panel Logo" onerror="this.style.display='none'">
+    <h2 style="margin-bottom: 25px; margin-top: 0;">Giriş Yap</h2>
     <input type="text" id="username" placeholder="Minecraft Kullanıcı Adı">
     <input type="password" id="password" placeholder="Şifre">
     <button class="btn-primary" style="width:100%; padding:18px; background:linear-gradient(135deg, var(--primary), var(--secondary)); border:none; border-radius:12px; color:white; font-weight:700; cursor:pointer;" onclick="connectAndGo()">GİRİŞ YAP</button>
