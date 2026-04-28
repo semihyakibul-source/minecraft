@@ -6,6 +6,7 @@
     <title>AesirMC | Mağaza</title>
     
     <meta property="og:title" content="AesirMC Resmi Mağazası">
+    <meta property="og:description" content="En uygun fiyatlı AesirMC item ve para ilanları.">
     <meta property="og:image" content="https://aesirhediye2026.vercel.app/logo.png">
     
     <link rel="icon" type="image/png" href="logo.png">
@@ -30,9 +31,8 @@
             min-height: 100vh;
         }
 
-        /* Navbar & Logo */
         nav {
-            padding: 30px 5%;
+            padding: 40px 5%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -41,157 +41,164 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
         }
-        .nav-logo img { width: 80px; filter: drop-shadow(0 0 15px var(--primary)); }
-        .nav-logo span { font-size: 24px; font-weight: 800; letter-spacing: 2px; }
+        .nav-logo img { width: 90px; filter: drop-shadow(0 0 20px var(--primary)); }
+        .nav-logo span { font-size: 26px; font-weight: 800; letter-spacing: 3px; }
 
-        /* Market Alanı */
         .market-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 20px 20px 80px 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
         }
 
-        /* İlan Kartları (İtemSatış Teması) */
         .product-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 20px;
+            border-radius: 24px;
             overflow: hidden;
-            transition: 0.3s;
-            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
         }
         .product-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-12px);
             border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(0, 162, 255, 0.15);
+            box-shadow: 0 20px 40px rgba(0, 162, 255, 0.15);
         }
 
         .product-img {
             width: 100%;
-            height: 180px;
+            height: 190px;
             object-fit: cover;
             border-bottom: 1px solid var(--border);
         }
 
-        .product-info { padding: 20px; }
+        .product-info { 
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
         
         .product-title {
-            font-size: 16px;
+            font-size: 17px;
             font-weight: 700;
             margin-bottom: 15px;
-            height: 40px;
+            line-height: 1.4;
+            height: 48px;
             overflow: hidden;
         }
 
-        .price-tag {
+        .price-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-top: auto;
             margin-bottom: 20px;
         }
         .price {
-            font-size: 20px;
+            font-size: 24px;
             font-weight: 800;
             color: var(--success);
         }
-        .price span { font-size: 14px; margin-left: 2px; }
+        .price span { font-size: 16px; margin-left: 3px; }
 
-        /* Satın Al Butonu */
         .buy-btn {
             display: block;
             width: 100%;
-            padding: 12px;
+            padding: 15px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             text-align: center;
             text-decoration: none;
-            border-radius: 12px;
+            border-radius: 14px;
             font-weight: 700;
             transition: 0.3s;
+            box-sizing: border-box;
         }
         .buy-btn:hover {
-            filter: brightness(1.2);
-            box-shadow: 0 5px 15px rgba(0, 102, 255, 0.4);
+            filter: brightness(1.1);
+            box-shadow: 0 8px 20px rgba(0, 102, 255, 0.3);
         }
 
-        /* Alt Bilgi */
-        .footer-note {
-            text-align: center;
-            margin-top: 50px;
-            padding: 20px;
-            opacity: 0.5;
-            font-size: 13px;
+        .badge {
+            font-size: 11px;
+            background: rgba(255,255,255,0.05);
+            padding: 4px 10px;
+            border-radius: 6px;
+            color: #aaa;
         }
     </style>
 </head>
 <body>
 
 <nav>
-    <div class="nav-logo">
+    <a href="/" class="nav-logo">
         <img src="logo.png" alt="Aesir Logo" onerror="this.src='https://minecraft.wiki/images/Anvil_JE3_BE2.png'">
-        <span>AESIR<span style="color:var(--primary)">MC</span> SHOP</span>
-    </div>
+        <span>AESIR<span style="color:var(--primary)">MC</span></span>
+    </a>
 </nav>
 
 <div class="market-container">
     <div class="product-card">
-        <img src="ilan1.jpg" class="product-img" alt="1 Milyon Para" onerror="this.src='https://via.placeholder.com/300x180/15171a/ffffff?text=1M+Para'">
+        <img src="ilan1.jpg" class="product-img" alt="1M Para" onerror="this.src='https://via.placeholder.com/400x200/15171a/00a2ff?text=1.000.000+Oyun+Parasi'">
         <div class="product-info">
-            <div class="product-title">Aesir MC ASMP | 1 Milyon Oyun Parası</div>
-            <div class="price-tag">
+            <div class="product-title">Aesir MC ASMP | 1 Milyon (1M) Anında Teslimat</div>
+            <div class="price-row">
                 <div class="price">30.00<span>₺</span></div>
-                <div style="font-size: 12px; opacity: 0.6;">Hızlı Teslimat</div>
+                <div class="badge">Anında Teslim</div>
             </div>
-            <a href="#" target="_blank" class="buy-btn">İlanı Görüntüle</a>
+            <a href="https://www.itemsatis.com/minecraft/aesir-mc-asmp-1-milyon-1m-aninda-teslimat-5197537.html" target="_blank" class="buy-btn">Satın Al</a>
         </div>
     </div>
 
     <div class="product-card">
-        <img src="ilan2.jpg" class="product-img" alt="64 İskelet Spawner" onerror="this.src='https://via.placeholder.com/300x180/15171a/ffffff?text=64x+İskelet+Spawner'">
+        <img src="ilan2.jpg" class="product-img" alt="64 Spawner" onerror="this.src='https://via.placeholder.com/400x200/15171a/00a2ff?text=64x+Iskelet+Spawner'">
         <div class="product-info">
-            <div class="product-title">AESIR MC | 64 ADET İSKELET SPAWNER</div>
-            <div class="price-tag">
+            <div class="product-title">Aesir MC | 64 ADET İSKELET SPAWNER SMP</div>
+            <div class="price-row">
                 <div class="price">249.00<span>₺</span></div>
-                <div style="font-size: 12px; opacity: 0.6;">Stokta Var</div>
+                <div class="badge">Stokta Var</div>
             </div>
-            <a href="#" target="_blank" class="buy-btn">İlanı Görüntüle</a>
+            <a href="https://www.itemsatis.com/minecraft/aesir-mc-64-adet-iskelet-spawner-smp-5219248.html" target="_blank" class="buy-btn">Satın Al</a>
         </div>
     </div>
 
     <div class="product-card">
-        <img src="ilan3.jpg" class="product-img" alt="5 Milyon Para" onerror="this.src='https://via.placeholder.com/300x180/15171a/ffffff?text=5M+Para'">
+        <img src="ilan3.jpg" class="product-img" alt="5M Para" onerror="this.src='https://via.placeholder.com/400x200/15171a/00a2ff?text=5.000.000+Oyun+Parasi'">
         <div class="product-info">
-            <div class="product-title">[AESIR MC] SMP (5M) OYUN PARASI</div>
-            <div class="price-tag">
+            <div class="product-title">Aesir MC SMP | 5M Oyun Parası Anında Teslimat</div>
+            <div class="price-row">
                 <div class="price">89.00<span>₺</span></div>
-                <div style="font-size: 12px; opacity: 0.6;">Popüler</div>
+                <div class="badge">Popüler</div>
             </div>
-            <a href="#" target="_blank" class="buy-btn">İlanı Görüntüle</a>
+            <a href="https://www.itemsatis.com/minecraft/aesir-mc-smp-5m-oyun-parasi-aninda-teslimat-5216976.html" target="_blank" class="buy-bitn">Satın Al</a>
         </div>
     </div>
 
     <div class="product-card">
-        <img src="ilan4.jpg" class="product-img" alt="10 İskelet Spawner" onerror="this.src='https://via.placeholder.com/300x180/15171a/ffffff?text=10x+İskelet+Spawner'">
+        <img src="ilan4.jpg" class="product-img" alt="10 Spawner" onerror="this.src='https://via.placeholder.com/400x200/15171a/00a2ff?text=10x+Iskelet+Spawner'">
         <div class="product-info">
-            <div class="product-title">Aesir ASMP - 10X İskelet Spawner Paketi</div>
-            <div class="price-tag">
+            <div class="product-title">Aesir ASMP | 10X İskelet Spawner Satışı</div>
+            <div class="price-row">
                 <div class="price">49.00<span>₺</span></div>
-                <div style="font-size: 12px; opacity: 0.6;">Kampanya</div>
+                <div class="badge">Ekonomik</div>
             </div>
-            <a href="#" target="_blank" class="buy-btn">İlanı Görüntüle</a>
+            <a href="https://www.itemsatis.com/minecraft/aesir-asmp-10x-iskelet-spawner-satisi-5196591.html" target="_blank" class="buy-btn">Satın Al</a>
         </div>
     </div>
 </div>
 
-<div class="footer-note">
-    Tüm işlemler İtemSatış güvencesiyle gerçekleştirilmektedir.<br>
-    © 2026 AesirMC Development
-</div>
+<footer style="text-align: center; padding-bottom: 40px; opacity: 0.4; font-size: 12px;">
+    Güvenli ödeme altyapısı İtemSatış tarafından sağlanmaktadır.<br>
+    © 2026 AesirMC Shop
+</footer>
 
 </body>
 </html>
