@@ -48,15 +48,15 @@
         .nav-logo img { width: 90px; filter: drop-shadow(0 0 20px var(--primary)); }
         .nav-logo span { font-size: 26px; font-weight: 800; letter-spacing: 3px; }
 
-        /* YAN YANA DİZİLİM İÇİN GÜNCELLENEN ALAN */
+        /* YAN YANA DİZİLİM AYARI */
         .market-container {
-            max-width: 1300px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px 40px 80px 40px;
             display: grid;
-            /* 4 tane ilanı yan yana sığdırmaya çalışır, sığmazsa otomatik küçülür */
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
+            /* Bilgisayarda 4 tane yan yana, tablette 2, mobilde 1 */
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
         }
 
         .product-card {
@@ -67,34 +67,34 @@
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex;
             flex-direction: column;
-            height: 100%; /* Kartların boyunu eşitler */
+            height: 100%;
         }
         .product-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
             border-color: var(--primary);
             box-shadow: 0 15px 35px rgba(0, 162, 255, 0.2);
         }
 
         .product-img {
             width: 100%;
-            height: 180px;
+            height: 170px;
             object-fit: cover;
             border-bottom: 1px solid var(--border);
         }
 
         .product-info { 
-            padding: 20px;
+            padding: 18px;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
         }
         
         .product-title {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 700;
             margin-bottom: 12px;
             line-height: 1.4;
-            height: 42px;
+            height: 40px;
             overflow: hidden;
         }
 
@@ -106,7 +106,7 @@
             margin-bottom: 15px;
         }
         .price {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 800;
             color: var(--success);
         }
@@ -124,14 +124,14 @@
             font-weight: 700;
             transition: 0.3s;
             box-sizing: border-box;
+            font-size: 14px;
         }
         .buy-btn:hover {
             filter: brightness(1.1);
-            transform: scale(1.02);
         }
 
         .badge {
-            font-size: 10px;
+            font-size: 9px;
             background: rgba(255,255,255,0.05);
             padding: 3px 8px;
             border-radius: 5px;
@@ -139,8 +139,8 @@
             text-transform: uppercase;
         }
 
-        /* Ekran çok genişse 4'lü yan yana zorla */
-        @media (min-width: 1200px) {
+        /* Bilgisayar ekranında tam 4'lü düzeni zorla */
+        @media (min-width: 1100px) {
             .market-container {
                 grid-template-columns: repeat(4, 1fr);
             }
@@ -158,7 +158,7 @@
 
 <div class="market-container">
     <div class="product-card">
-        <img src="ilan1.jpg" class="product-img" alt="1M Para" onerror="this.src='https://via.placeholder.com/400x200/15171a/00a2ff?text=1.000.000+Para'">
+        <img src="ilan1.png" class="product-img" alt="1M Para" onerror="this.src='https://via.placeholder.com/400x200/15171a/00a2ff?text=ilan1.png+Bulunamadi'">
         <div class="product-info">
             <div class="product-title">Aesir MC ASMP | 1 Milyon (1M) Anında Teslimat</div>
             <div class="price-row">
@@ -170,7 +170,7 @@
     </div>
 
     <div class="product-card">
-        <img src="ilan2.jpg" class="product-img" alt="64 Spawner" onerror="this.src='https://via.placeholder.com/400x200/15171a/00a2ff?text=64x+Iskelet+Spawner'">
+        <img src="ilan2.png" class="product-img" alt="64 Spawner" onerror="this.src='https://via.placeholder.com/400x200/15171a/00a2ff?text=ilan2.png+Bulunamadi'">
         <div class="product-info">
             <div class="product-title">Aesir MC | 64 ADET İSKELET SPAWNER SMP</div>
             <div class="price-row">
@@ -182,7 +182,7 @@
     </div>
 
     <div class="product-card">
-        <img src="ilan3.jpg" class="product-img" alt="5M Para" onerror="this.src='https://via.placeholder.com/400x200/15171a/00a2ff?text=5.000.000+Para'">
+        <img src="ilan3.png" class="product-img" alt="5M Para" onerror="this.src='https://via.placeholder.com/400x200/15171a/00a2ff?text=ilan3.png+Bulunamadi'">
         <div class="product-info">
             <div class="product-title">Aesir MC SMP | 5M Oyun Parası Anında Teslimat</div>
             <div class="price-row">
@@ -194,7 +194,7 @@
     </div>
 
     <div class="product-card">
-        <img src="ilan4.jpg" class="product-img" alt="10 Spawner" onerror="this.src='https://via.placeholder.com/400x200/15171a/00a2ff?text=10x+Iskelet+Spawner'">
+        <img src="ilan4.png" class="product-img" alt="10 Spawner" onerror="this.src='https://via.placeholder.com/400x200/15171a/00a2ff?text=ilan4.png+Bulunamadi'">
         <div class="product-info">
             <div class="product-title">Aesir ASMP | 10X İskelet Spawner Satışı</div>
             <div class="price-row">
